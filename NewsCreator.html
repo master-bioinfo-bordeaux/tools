@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<header>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="Distribution" content="Global" />
+  <meta name="Author" content="Master Bioinformatique de Bordeaux" />
+  <meta name="Robots" content="index,follow" />
+  <title>Formulaire d'ajout de News</title>
+  <h1 style="font-family: 'Rock Salt', cursive;"> Formulaire d'ajout de News</h1>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/stylesheet.css">
+</header>
+<body>
+  <br>
+  <br>
+  <center>
+  <form method="post" action="NewsCreator.js">
+    <p><label for="title">Titre</label> <br><input type="text" name="title" maxlength="30"/></p>
+    <p><label for="intro">Introduction</label> <br><textarea name="content" rows="1" cols="50" maxlength="50"></textarea></p>
+    <p><label for="content">Contenu</label> <br><textarea name="content" rows="10" cols="50"></textarea></p>
+    <p><label for="icon">Icône</label></p>
+    <p><label for="publication">Date de publication</label> <br><input type="number" min="2015" max="2030" placeholder="Année (YYYY)" value="2015"/> <input type="number" min="1" max="12" placeholder="Mois(MM)"value="9"/> <input type="number" min="1" max="31" placeholder="Jour(DD)" value="1" /></p>
+
+    <input type="submit" value="Publier" />
+  </form>
+</center>
+</body>
+
+</html>
