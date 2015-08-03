@@ -5,24 +5,36 @@
   <meta name="Distribution" content="Global" />
   <meta name="Author" content="Master Bioinformatique de Bordeaux" />
   <meta name="Robots" content="index,follow" />
-  <title>Formulaire d'ajout de News</title>
-  <h1 style="font-family: 'Rock Salt', cursive;"> Formulaire d'ajout de News</h1>
+  <title>Form of News'addition</title>
+  <h1 style="font-family: 'Rock Salt', cursive;">Form of News'addition</h1>
   <link rel="stylesheet" type="text/css" media="screen" href="css/stylesheet.css">
+  <script type="text/javascript" src="NewsCreator.js"></script>
+  <script type="text/javascript" src=" ../img/listimg.json"></script>
 </header>
-<body>
-  <br>
-  <br>
+<body onload="initNews()">
   <center>
-  <form method="post" action="NewsCreator.js">
-    <p><label for="title">Titre</label> <br><input type="text" name="title" maxlength="30"/></p>
-    <p><label for="intro">Introduction</label> <br><textarea name="content" rows="1" cols="50" maxlength="50"></textarea></p>
-    <p><label for="content">Contenu</label> <br><textarea name="content" rows="10" cols="50"></textarea></p>
-    <p><label for="icon">Icône</label></p>
-    <p><label for="publication">Date de publication</label> <br><input type="number" min="2015" max="2030" placeholder="Année (YYYY)" value="2015"/> <input type="number" min="1" max="12" placeholder="Mois(MM)"value="9"/> <input type="number" min="1" max="31" placeholder="Jour(DD)" value="1" /></p>
 
-    <input type="submit" value="Publier" />
-  </form>
-</center>
-</body>
+    <p><label for="title"><h2>Title</h2></label> <br><input type="text" name="title" id="title" maxlength="30" required/></p>
+    <p><label for="intro"><h2>Introduction</h2></label> <br><textarea name="intro" id="intro" rows="1" cols="50" maxlength="50" required></textarea></p>
+    <p><label for="content"><h2>Content</h2></label> <br><textarea name="content" id="content" rows="10" cols="50" required></textarea></p>
 
-</html>
+    <div id="iconimg"><h2>Choice of the icon</h2><br>
+     <h3>Biology</h3><br>
+     <p id="biology"></p>
+     <h3>Teaching</h3><br>
+     <p id="teaching"></p>
+     <h3>Misc</h3><br>
+     <p id="misc"></p></div>
+
+    <h3>Publication date (YYYY/MM/DD)</h3><br>
+    <p id="pubdate"></p></div>
+
+     <input type="submit"  onclick="get_value()" value="Publish" />
+
+   </center>
+
+
+   <div id="result"></div>
+ </body>
+
+ </html>
