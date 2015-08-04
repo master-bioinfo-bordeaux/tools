@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<header>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="Distribution" content="Global" />
+  <meta name="Author" content="Master Bioinformatique de Bordeaux" />
+  <title>Form of News'deletion</title>
+  <h1 style="font-family: 'Rock Salt', cursive;">Form of News'deletion</h1>
+  <link rel="stylesheet" type="text/css" media="screen" href="css/stylesheet.css">
+  <script type="text/javascript" src="NewsForm.js"></script>
+  <script type="text/javascript" src=" ../img/listimg.json"></script>
+  <script type="application/json" src="http://master-bioinfo-bordeaux.github.io/data/news_json.js"></script>
+</header>
+<body onload="list_articles()">
+  <center>
+    <br><br>
+
+    <p>Which news do you want to delete ?</p>
+
+    <div id="listarticles"></div>
+
+
+     <input type="submit"  onclick="get_value()" value="Delete" />
+
+   </center>
+
+
+   <div id="result"></div>
+ </body>
+
+ </html>

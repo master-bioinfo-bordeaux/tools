@@ -6,7 +6,7 @@ function get_value(){
 }
 
 function initNews(){
-	var icons_name=[];
+/*	var icons_name=[];
 	var icons_type=[];
 	for (var n in img){
 		icons_name.push(img[n].name);
@@ -24,7 +24,7 @@ function initNews(){
 		}
 		document.getElementById(ident).innerHTML+='<input type="radio" name="' + icons_name[t] +'" value="' + t + '" id="' + t +'" /> <img src="../img/'+icons_name[t]+'_thumb.jpg">';
 	}
-
+*/
 	var date = new Date();
 	var day = date.getDate();
 	var month = date.getMonth()+1;
@@ -33,5 +33,11 @@ function initNews(){
 	document.getElementById("pubdate").innerHTML+='<input type="number" min="2015" max="2030" value="'+year+'"/> <input type="number" min="1" max="12" value="'+month+'"/> <input type="number" min="1" max="31" value="'+day+'" />';
 }
 
-
+function list_articles(){
+	var articles_name = [];
+	for (var n in news_data){
+		articles_name.push(news_data[n].title);
+		document.getElementById("listarticles").innerHTML+='<input type="checkbox" name="' + articles_name[t] +'" value="' + t + '" id="' + t +'" />'+articles_name[n];
+	}
+}
 
