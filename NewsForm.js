@@ -40,20 +40,24 @@ function list_articles(){
 	// 	document.getElementById("listarticles").innerHTML+='<input type="checkbox" name="' + articles_name[t] +'" value="' + t + '" id="' + t +'" />'+articles_name[n];
 	// }
 	var xhr = new XMLHttpRequest();
-
+	var myNews = {};
+	var News_title=[];
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-        var myNews = JSON.parse(xhr.responseText); // Données textuelles récupérées
-        myDisplay(myNews);
-    }
-};
-xhr.open("GET", "http://master-bioinfo-bordeaux.github.io/data/news.json", true);
-xhr.send(null);
+        	myNews = JSON.parse(xhr.responseText); // Données textuelles récupérées
+       		myDisplay(myNews);
+    	}
+    	for(var n in myNews){
+  			document.getElementById("listarticles").innerHTML+='<input type="checkbox" name="'+myNews[n]["title"]+'" id="'+myNews[n]["title"]+'" /> <label for="'+myNews[n]["title"]+'">'+myNews[n]["title"]+'</label><br />'; 
+		}
+	};
+	// xhr.open("GET", "http://master-bioinfo-bordeaux.github.io/data/news_json.js", true);
+	xhr.open("GET", "news_json.js", true);
+	xhr.send(null);
+}
 
 function myDisplay(obj) {
 	console.log(obj);
-}
-
 }
 
 
