@@ -34,10 +34,26 @@ function initNews(){
 }
 
 function list_articles(){
-	var articles_name = [];
-	for (var n in news_data){
-		articles_name.push(news_data[n].title);
-		document.getElementById("listarticles").innerHTML+='<input type="checkbox" name="' + articles_name[t] +'" value="' + t + '" id="' + t +'" />'+articles_name[n];
-	}
+	// var articles_name = [];
+	// for (var n in news_data){
+	// 	articles_name.push(news_data[n].title);
+	// 	document.getElementById("listarticles").innerHTML+='<input type="checkbox" name="' + articles_name[t] +'" value="' + t + '" id="' + t +'" />'+articles_name[n];
+	// }
+	var xhr = new XMLHttpRequest();
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+        var myNews = JSON.parse(xhr.responseText); // Données textuelles récupérées
+        myDisplay(myNews);
+    }
+};
+xhr.open("GET", "http://master-bioinfo-bordeaux.github.io/data/news.json", true);
+xhr.send(null);
+
+function myDisplay(obj) {
+	console.log(obj);
 }
+
+}
+
 
