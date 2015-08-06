@@ -7,7 +7,7 @@
   <title>Administration of News</title>
   <link rel="stylesheet" type="text/css" media="screen" href="css/stylesheet.css">
   <script type="text/javascript" src="NewsForm.js"></script>
-  <script type="text/javascript" src=" ../img/listimg.json"></script>
+  <script type="text/javascript" src="img/listimg.json"></script>
   <script type="application/json" src="news.json"></script>
 </head>
 <body onload="initNews()">
@@ -27,6 +27,7 @@
 <!-- Partie de création des news, reliée par l'ancre #create dans le bouton -->
 	<div id="create" name="create">
 		<h2>Creation of a news</h2><br>
+		<h3>Author<h3>     <input type="text" name="author" id="author" required/><br><br>
 	    <h3>Title</h3>     <input type="text" name="title" id="title" required/><br><br>
 	    <h3>Introduction</h3>     <input type="text" name="intro" id="intro" required></textarea><br><br>
 	    <h3>Content</h3><textarea name="content" id="content" rows="10" cols="50" required></textarea>
@@ -40,9 +41,10 @@
 	     <p id="misc"></p></div>
 
 	    <h3>Publication date (YYYY/MM/DD)</h3><br>
-	    <p id="pubdate"></p></div>
+	    <p id="pubdate"></p>
 
-	     <input type="submit" onclick="createNews()" value="Publish" />
+	     <input type="submit" onclick="createNews()" value="Publish" /></div>
+	     <div id="result"></div>
 
 <!-- Partie d'édition des news, reliée par l'ancre #modify dans le bouton -->
 	<div id="modify" name="modify">
