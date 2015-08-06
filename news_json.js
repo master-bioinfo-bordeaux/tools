@@ -2,7 +2,7 @@
     {
         "ID": "20150901T140039@userGithub",
         "date": "20150901",
-        "title": "NEWS #1: RENTREE 2015 M1  M2",
+        "title": "NEWS #1: RENTREE 2015 M1 M2",
         "contents": "Curabitur feugiat urna a eros viverra, quis vulputate ipsum sollicitudin. Vestibulum efficitur magna nulla, porta tincidunt nunc lobortis vitae.<!--more-->Here is the remaining text only available if you click on the 'More...' button ... Vivamus a leo ipsum. Curabitur rutrum dictum mauris quis suscipit. Aliquam auctor metus non dolor rhoncus scelerisque.",
         "image": "misc_calendar" 
     },
@@ -62,4 +62,4 @@
         "contents": "Curabitur feugiat urna a eros viverra, quis vulputate ipsum sollicitudin. Vestibulum efficitur magna nulla, porta tincidunt nunc lobortis vitae.<!--more-->Here is the remaining text only available if you click on the 'More...' button ... Vivamus a leo ipsum. Curabitur rutrum dictum mauris quis suscipit. Aliquam auctor metus non dolor rhoncus scelerisque.",
         "image": "misc_calendar" 
     }
-] 
+]
