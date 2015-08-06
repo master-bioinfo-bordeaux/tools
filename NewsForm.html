@@ -11,7 +11,6 @@
   <script type="application/json" src="news.json"></script>
 </head>
 <body onload="initNews()">
-
 <!-- 	Barre de navigation fixe et prenant toute la largeur de l'écran, tout en haut de la page-->
     <nav>
 	    <ul>
@@ -21,15 +20,16 @@
 	      <li><a class = "button" href="javascript:void(0)" onclick="pushNews()">Apply Changes to GitHub</a></li>
 	    </ul>
     </nav>
+
 <br><br>
     <h1>Administration of news</h1>
 
 <!-- Partie de création des news, reliée par l'ancre #create dans le bouton -->
 	<div id="create" name="create">
-		<h2>Creation of a news</h2>
-	    <p><label for="title"><h3>Title</h3></label> <br><input type="text" name="title" id="title" required/></p>
-	    <p><label for="intro"><h3>Introduction</h3></label> <br><textarea name="intro" id="intro" rows="1" cols="50" required></textarea></p>
-	    <p><label for="content"><h3>Content</h3></label> <br><textarea name="content" id="content" rows="10" cols="50" required></textarea></p>
+		<h2>Creation of a news</h2><br>
+	    <h3>Title</h3>     <input type="text" name="title" id="title" required/><br><br>
+	    <h3>Introduction</h3>     <input type="text" name="intro" id="intro" required></textarea><br><br>
+	    <h3>Content</h3><textarea name="content" id="content" rows="10" cols="50" required></textarea>
 
 	    <div id="iconimg"><h3>Choice of the icon</h3><br>
 	     Biology<br>

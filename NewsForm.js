@@ -22,7 +22,7 @@
 		else{
 			var ident="misc";
 		}
-		document.getElementById(ident).innerHTML+='<input type="radio" name="' + icons_name[t] +'" value="' + t + '" id="' + t +'" /> <img src="../img/'+icons_name[t]+'_thumb.jpg">';
+		document.getElementById(ident).innerHTML+='<input type="radio" name="' + icons_name[t] +'" value="' + t + '" id="' + t +'" class="imgselected" /> <img src="../img/'+icons_name[t]+'_thumb.jpg">';
 	}
 
 	var date = new Date();
@@ -30,7 +30,7 @@
 	var month = date.getMonth()+1;
 	var year = date.getFullYear();
 
-	document.getElementById("pubdate").innerHTML+='<input type="number" min="2015" max="2030" value="'+year+'"/> <input type="number" min="1" max="12" value="'+month+'"/> <input type="number" min="1" max="31" value="'+day+'" />';
+	document.getElementById("pubdate").innerHTML+='<input type="number" min="2015" max="2030" value="'+year+'" id="publiyear"/> <input type="number" min="1" max="12" value="'+month+'" id="publimonth"/> <input type="number" min="1" max="31" value="'+day+'" id="publiday" />';
 
 	getNewsJSON();
 	}
@@ -59,10 +59,27 @@ function updateNewsDisplay(arr) {
 
 }
 
-// function createNews(){
+function createNews(){
+	var title=document.getElementById("title").value;
+	var intro=document.getElementById("intro").value;
+	var content=document.getElementById("content").value;
 
-// 	updateNewsDisplay();
-// }
+  	var selectedimg = document.getElementsByClassName("imgselected");
+	for (var i = 0; i< selectedimg.length; i++)
+	{
+	   if (selectedimg[i].checked){
+	   	var img=selectedimg[i].name;
+	   }
+	}
+
+	var yearpubli=document.getElementById("publiyear").value;
+	var monthpubli=document.getElementById("publimonth").value;
+	var daypubli=document.getElementById("publiday").value;
+	var publidate=yearpubli+monthpubli+daypubli;
+
+	console.log(title,intro,content,img,publidate)
+	updateNewsDisplay();
+}
 
 // function deleteNews(){
 //   		var nbtitles = document.getElementsByClassName("titlenews");
