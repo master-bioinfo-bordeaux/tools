@@ -33,7 +33,6 @@
 	document.getElementById("pubdate").innerHTML+='<input type="number" min="2015" max="2030" value="'+year+'"/> <input type="number" min="1" max="12" value="'+month+'"/> <input type="number" min="1" max="31" value="'+day+'" />';
 
 	getNewsJSON();
-	// updateNewsDisplay(myNews);
 	}
 
 function getNewsJSON(){
@@ -43,24 +42,22 @@ function getNewsJSON(){
 		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
         	myNews = JSON.parse(xhr.responseText); // Données textuelles récupérées
         		console.log(myNews);
-
-       		// myDisplay(myNews);
+	    		updateNewsDisplay(myNews);
     	}
 		
 	};
 	// xhr.open("GET", "http://master-bioinfo-bordeaux.github.io/data/news.json", true);
 	xhr.open("GET", "news_json.js", true);
 	xhr.send(null);
-	console.log(myNews);
 }
 
-// function updateNewsDisplay(arr) {
-// 	  for(var n in arr){
-//   		document.getElementById("listForModify").innerHTML+='<input type="radio" name="'+arr[n]["title"]+'" class="titlenews"/> <label for="'+arr[n]["title"]+'">'+arr[n]["title"]+'</label><br />'; 
-//   		document.getElementById("listForDelete").innerHTML+='<input type="radio" name="'+arr[n]["title"]+'" class="titlenews"/> <label for="'+arr[n]["title"]+'">'+arr[n]["title"]+'</label><br />'; 
-// 	}
+function updateNewsDisplay(arr) {
+	  for(var n in arr){
+  		document.getElementById("listForModify").innerHTML+='<input type="radio" name="'+arr[n]["title"]+'" class="titlenews"/> <label for="'+arr[n]["title"]+'">'+arr[n]["title"]+'</label><br />'; 
+  		document.getElementById("listForDeletion").innerHTML+='<input type="radio" name="'+arr[n]["title"]+'" class="titlenews"/> <label for="'+arr[n]["title"]+'">'+arr[n]["title"]+'</label><br />'; 
+	}
 
-// }
+}
 
 // function createNews(){
 
