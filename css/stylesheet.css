@@ -1,4 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
+
+/*css du fond de la page entière*/ 
 html {
   background: #6C7989;
   background: #6c7989 -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6c7989), color-stop(100%, #434b55)) fixed;
@@ -9,17 +11,11 @@ html {
   background: #6c7989 linear-gradient(#6c7989, #434b55) fixed;
 }
 
-#titlecreate{
-  background-image:url("http://master-bioinfo-bordeaux.github.io/img/divider01.png");
-  width:100%;
-  height:100px;
-  text-align: center;
-}
-
+/*css du body entier*/
 body {
   padding: 0px 0px 50px 0px;
   margin: 0px 0px 50px 0px;
-;
+  ;
   font: 14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #fff;
   font-weight: 300;
@@ -27,75 +23,19 @@ body {
   text-align: center
 }
 
+/* css du div en général (séparation d'avec la div précédente)*/
 div{
   padding:30px;
 }
 
-nav ul{
-    margin: 0;
-    padding: 0;
-}
-nav ul li {
-    /* This allow us to arrange list items in a row, without using float */
-    display: inline-block;
-    list-style-type: none;
-}
-
-/* Create a style for the first level items */
-nav > ul > li > a {
-    color: #aaa;
-    display: inline;
-    line-height: 2em;
-    padding: 0.5em 0.5em;
-    text-decoration: none;
-    font-size:15px;
-}
-
-
-.wrapper {
-  width: 640px;
-  margin: 0 auto;
-  background: #DEDEDE;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -o-border-radius: 8px;
-  -ms-border-radius: 8px;
-  -khtml-border-radius: 8px;
-  border-radius: 8px;
-  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px;
-  -o-box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 0, 0, 0.45) 0 3px 10px;
-}
-
-head, section, footer {
-  display: block;
-}
-
-a {
-  color: #069;
-  text-decoration: none;
-}
-
-p {
-  margin: 0 0 20px;
-  padding: 0;
-}
-
-strong {
-  color: #222;
-  font-weight: 700;
-}
-
+/*css de la barre de navigation*/
 nav {
-/*  -moz-border-radius: 8px 8px 0 0;
-  -webkit-border-radius: 8px 8px 0 0;
-  -o-border-radius: 8px 8px 0 0;
-  -ms-border-radius: 8px 8px 0 0;
-  -khtml-border-radius: 8px 8px 0 0;*/
-  border-bottom-left-radius:8px;
-  text-align: center;
-  font-weight:bold;
+  -moz-border-radius: 0px 0px 0px 8px;
+  -webkit-border-radius: 0px 0px 0px 8px;
+  -o-border-radius: 0px 0px 0px 8px;
+  -ms-border-radius: 0px 0px 0px 8px;
+  -khtml-border-radius: 0px 0px 0px 8px;
+  border-radius:0px 0px 0px 8px;
   background: #C6EAFA;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ddfbfc), color-stop(100%, #c6eafa));
   background: -webkit-linear-gradient(#ddfbfc, #c6eafa);
@@ -108,304 +48,47 @@ nav {
   border-bottom: 1px solid #B2D2E1;
   width:100%;
 }
-h1 {
-  margin: 10px;
-  padding: 10px;
-  font-size: 24px;
-  line-height: 1.2;
-  color: #069;
-  text-shadow: rgba(255, 255, 255, 0.9) 0 1px 0;
-}
-
-h2 {
-  margin: 30px;
-  margin-top:50px;
-  padding: 30px;
-  font-size: 18px;
-  font-color: #C6EAFA;
-
-  line-height: 1.2;
-  color: #069;
-}
-nav.without-description h1 {
-  margin: 10px 0;
-}
-nav p {
-  margin: 0;
-  color: #61778B;
-  width: 300px;
-  font-size: 13px;
-}
-nav p.view {
-/*  display: none;
-*/  font-weight: 700;
-  text-shadow: rgba(255, 255, 255, 0.9) 0 1px 0;
-  -webkit-font-smoothing: antialiased;
-}
-nav p.view a {
-  color: #06c;
-}
-nav p.view small {
-  font-weight: 400;
-}
-/*nav ul {
+/*css des éléments écrits dans la barre de navigation*/
+nav ul{
   margin: 0;
   padding: 0;
-  list-style: none;
-  position: absolute;
-  z-index: 1;
-  right: 20px;
-  top: 20px;
-  height: 38px;
-  padding: 1px 0;
-  background: #5198DF;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #77b9fb), color-stop(100%, #3782cd));
-  background: -webkit-linear-gradient(#77b9fb, #3782cd);
-  background: -moz-linear-gradient(#77b9fb, #3782cd);
-  background: -o-linear-gradient(#77b9fb, #3782cd);
-  background: -ms-linear-gradient(#77b9fb, #3782cd);
-  background: linear-gradient(#77b9fb, #3782cd);
-  border-radius: 5px;
-  -moz-box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
-  -webkit-box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
-  -o-box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
-  box-shadow: inset rgba(255, 255, 255, 0.45) 0 1px 0, inset rgba(0, 0, 0, 0.2) 0 -1px 0;
-  width: 240px;
 }
-nav ul:before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  left: -5px;
-  top: -4px;
-  right: -5px;
-  bottom: -6px;
-  background: rgba(0, 0, 0, 0.1);
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -o-border-radius: 8px;
-  -ms-border-radius: 8px;
-  -khtml-border-radius: 8px;
-  border-radius: 8px;
-  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0;
-  -o-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0, inset rgba(255, 255, 255, 0.7) 0 -1px 0;
-}
+/*css de chaque élément dans la barre de navigation (mise en ligne horizontale)*/
 nav ul li {
-  width: 79px;
-  float: left;
-  border-right: 1px solid #3A7CBE;
-  height: 38px;
+  display: inline-block;
 }
-nav ul li + li {
-  width: 78px;
-  border-left: 1px solid #8BBEF3;
-}
-nav ul li + li + li {
-  border-right: none;
-  width: 79px;
-}
-nav ul a {
-  line-height: 1;
-  font-size: 11px;
-  color: #fff;
-  color: rgba(255, 255, 255, 0.8);
-  display: block;
-  text-align: center;
-  font-weight: 400;
-  padding-top: 6px;
-  height: 40px;
-  text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0;
-}
-nav ul a strong {
-  font-size: 14px;
-  display: block;
-  color: #fff;
-  -webkit-font-smoothing: antialiased;
-}*/
-
-section {
-  padding: 15px 20px;
-  font-size: 15px;
-  border-top: 1px solid #fff;
-  background: -webkit-gradient(linear, 50% 0%, 50% 700, color-stop(0%, #fafafa), color-stop(100%, #dedede));
-  background: -webkit-linear-gradient(#fafafa, #dedede 700px);
-  background: -moz-linear-gradient(#fafafa, #dedede 700px);
-  background: -o-linear-gradient(#fafafa, #dedede 700px);
-  background: -ms-linear-gradient(#fafafa, #dedede 700px);
-  background: linear-gradient(#fafafa, #dedede 700px);
-  -moz-border-radius: 0 0 8px 8px;
-  -webkit-border-radius: 0 0 8px 8px;
-  -o-border-radius: 0 0 8px 8px;
-  -ms-border-radius: 0 0 8px 8px;
-  -khtml-border-radius: 0 0 8px 8px;
-  border-radius: 0 0 8px 8px;
-  position: relative;
+/* css des liens (par défaut ici de chaque élément présent ici car uniquement des liens) */
+nav > ul > li > a {
+  color: #6C7989;
+  display: inline; /*pour responsive ?*/
+  line-height: 2em;
+  padding: 0.5em 0.5em;
+  font-size:15px;
+  text-decoration: none;
+  font-weight:bold;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #222;
-  padding: 0;
-  margin: 0 0 0px;
-  line-height: 1.2;
-}
-
-p, ul, ol, table, pre, dl {
-  margin: 0 0 20px;
-}
-
-h1, h2, h3 {
-  line-height: 1.1;
-}
-
+/* css du titre de la page*/
 h1 {
   font-size: 28px;
+  color: #222;
+  text-shadow: rgba(255, 255, 255, 0.9) 0 1px 0;
 }
-
+/* css des trois catégories de la page*/
 h2 {
+  font-size: 18px;
   color: #393939;
 }
-
-h3, h4, h5, h6 {
+/* css des sous-titres de catégorie*/
+h3{
   color: #494949;
 }
 
-blockquote {
-  margin: 0 -20px 20px;
-  padding: 15px 20px 1px 40px;
-  font-style: italic;
-  background: #ccc;
-  background: rgba(0, 0, 0, 0.06);
-  color: #222;
+/*css commun aux différents titres*/
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.1;
+  margin: 0px;
+  padding: 0px;
 }
 
-img {
-  max-width:100%;
-}
-
-code, pre {
-  font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
-  color: #333;
-  font-size: 12px;
-}
-
-pre {
-  padding: 20px;
-  background: #3A3C42;
-  color: #f8f8f2;
-  margin: 0 -20px 20px;
-  overflow-x:auto;
-}
-pre code {
-  color: #f8f8f2;
-}
-li pre {
-  margin-left: -60px;
-  padding-left: 60px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  text-align: left;
-  padding: 5px 10px;
-  border-bottom: 1px solid #aaa;
-}
-
-dt {
-  color: #222;
-  font-weight: 700;
-}
-
-th {
-  color: #222;
-}
-
-small {
-  font-size: 11px;
-}
-
-hr {
-  border: 0;
-  background: #aaa;
-  height: 1px;
-  margin: 0 0 20px;
-}
-
-footer {
-  width: 640px;
-  margin: 0 auto;
-  padding: 20px 0 0;
-  color: #ccc;
-  overflow: hidden;
-}
-footer a {
-  color: #fff;
-  font-weight: bold;
-}
-footer p {
-  float: left;
-}
-footer p + p {
-  float: right;
-}
-
-@media print, screen and (max-width: 740px) {
-  body {
-    padding: 0;
-  }
-
-  .wrapper {
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
-    -o-border-radius: 0;
-    -ms-border-radius: 0;
-    -khtml-border-radius: 0;
-    border-radius: 0;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    -o-box-shadow: none;
-    box-shadow: none;
-    width: 100%;
-  }
-
-  footer {
-    -moz-border-radius: 0;
-    -webkit-border-radius: 0;
-    -o-border-radius: 0;
-    -ms-border-radius: 0;
-    -khtml-border-radius: 0;
-    border-radius: 0;
-    padding: 20px;
-    width: auto;
-  }
-  footer p {
-    float: none;
-    margin: 0;
-  }
-  footer p + p {
-    float: none;
-  }
-}
-@media print, screen and (max-width:580px) {
-  head ul {
-    display: none;
-  }
-
-  head p.view {
-    display: block;
-  }
-
-  head p {
-    width: 100%;
-  }
-}
-@media print {
-  head p.view a small:before {
-    content: 'at http://github.com/';
-  }
 }
