@@ -15,9 +15,9 @@
 <!-- 	Barre de navigation fixe et prenant toute la largeur de l'écran, tout en haut de la page-->
     <nav>
 	    <ul>
-	      <li><a class = "button" href="#create" onclick="createNews()">Create</a></li>
-	      <li><a class = "button" href="#modify" onclick="modifyNews()">Modify</a></li>
-	      <li><a class = "button" href="#delete" onclick="deleteNews()">Delete</a><li>
+	      <li><a class = "button" href="#create">Create</a></li>
+	      <li><a class = "button" href="#modify">Modify</a></li>
+	      <li><a class = "button" href="#delete">Delete</a><li>
 	      <li><a class = "button" href="javascript:void(0)" onclick="pushNews()">Apply Changes to GitHub</a></li>
 	    </ul>
     </nav>
@@ -42,25 +42,25 @@
 	    <h3>Publication date (YYYY/MM/DD)</h3><br>
 	    <p id="pubdate"></p></div>
 
-	     <input type="submit"  onclick="get_value()" value="Publish" />
+	     <input type="submit" onclick="createNews()" value="Publish" />
 
-<!-- Partie d'édition des news, reliée par l'ancre #create dans le bouton -->
+<!-- Partie d'édition des news, reliée par l'ancre #modify dans le bouton -->
 	<div id="modify" name="modify">
 		<h2>Modification of a news</h2><br>
 		Select a news to modify 	
 	    <div id="listForModify"></div>
         <div id="formModify">
-               <input type="submit"  onclick="edit_news()" value="Modify" />
+               <input type="submit" onclick="modifyNews()" value="Modify" />
         </div>
     </div>
 
-<!-- Partie de suppression des news, reliée par l'ancre #create dans le bouton -->
+<!-- Partie de suppression des news, reliée par l'ancre #delete dans le bouton -->
 	<div id="delete" name="delete">
 		<h2>Deletion of news</h2><br>
 		Select one (or more) news to delete 	
 	    <div id="listForDeletion"></div>
         <div id="formDelete">
-               <input type="submit"  onclick="delete_news()" value="Delete" />
+               <input type="submit"  onclick="deleteNews()" value="Delete" />
         </div>
     </div>
 </body>

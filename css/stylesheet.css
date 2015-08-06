@@ -113,6 +113,8 @@ h2 {
   margin: 30px;
   padding: 30px;
   font-size: 18px;
+  font-color: #C6EAFA;
+
   line-height: 1.2;
   color: #069;
 }
@@ -126,8 +128,8 @@ nav p {
   font-size: 13px;
 }
 nav p.view {
-  display: none;
-  font-weight: 700;
+/*  display: none;
+*/  font-weight: 700;
   text-shadow: rgba(255, 255, 255, 0.9) 0 1px 0;
   -webkit-font-smoothing: antialiased;
 }

@@ -1,13 +1,6 @@
 	var myNews;
-
-	
-	function init() {
-getNewsJSON()
-
-	}
-
-
-function createNews(){
+	//fonction de recherche des éléments
+	function initNews() {
 
 	var title=document.getElementById("title").value;
 	var intro=document.getElementById("intro").value;
@@ -39,33 +32,9 @@ function createNews(){
 
 	document.getElementById("pubdate").innerHTML+='<input type="number" min="2015" max="2030" value="'+year+'"/> <input type="number" min="1" max="12" value="'+month+'"/> <input type="number" min="1" max="31" value="'+day+'" />';
 
-	updateNewsDisplay();
-}
-
-function deleteNews(){
-  		var nbtitles = document.getElementsByClassName("titlenews");
-
-		for (var i = 0; i< nbtitles.length; i++)
-		{
-			
-		    if (nbtitles[i].checked)
-		    {
-		        myNews.splice(i,1)
-		        }
-		}
-		console.log(myNews);
-		console.log(typeof(myNews));
-
-		updateNewsDisplay();
-}
-
-function get_value(){
-
-	console.log(title,intro,content);
-}
-
-
-
+	getNewsJSON();
+	// updateNewsDisplay(myNews);
+	}
 
 function getNewsJSON(){
 	var xhr = new XMLHttpRequest();
@@ -73,6 +42,8 @@ function getNewsJSON(){
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
         	myNews = JSON.parse(xhr.responseText); // Données textuelles récupérées
+        		console.log(myNews);
+
        		// myDisplay(myNews);
     	}
 		
@@ -80,14 +51,49 @@ function getNewsJSON(){
 	// xhr.open("GET", "http://master-bioinfo-bordeaux.github.io/data/news.json", true);
 	xhr.open("GET", "news_json.js", true);
 	xhr.send(null);
-	console.log(listarticles)
+	console.log(myNews);
 }
 
-function updateNewsDisplay() {
-	  for(var n in arr){
-  		document.getElementById("listarticles").innerHTML+='<input type="radio" name="'+arr[n]["title"]+'" class="titlenews"/> <label for="'+myNews[n]["title"]+'">'+myNews[n]["title"]+'</label><br />'; 
-	}
+// function updateNewsDisplay(arr) {
+// 	  for(var n in arr){
+//   		document.getElementById("listForModify").innerHTML+='<input type="radio" name="'+arr[n]["title"]+'" class="titlenews"/> <label for="'+arr[n]["title"]+'">'+arr[n]["title"]+'</label><br />'; 
+//   		document.getElementById("listForDelete").innerHTML+='<input type="radio" name="'+arr[n]["title"]+'" class="titlenews"/> <label for="'+arr[n]["title"]+'">'+arr[n]["title"]+'</label><br />'; 
+// 	}
 
-}
+// }
+
+// function createNews(){
+
+// 	updateNewsDisplay();
+// }
+
+// function deleteNews(){
+//   		var nbtitles = document.getElementsByClassName("titlenews");
+
+// 		for (var i = 0; i< nbtitles.length; i++)
+// 		{
+			
+// 		    if (nbtitles[i].checked)
+// 		    {
+// 		        myNews.splice(i,1)
+// 		        }
+// 		}
+// 		console.log(myNews);
+// 		console.log(typeof(myNews));
+
+// 		updateNewsDisplay();
+// }
+
+// function get_value(){
+
+// 	console.log(title,intro,content);
+// }
+
+
+
+
+
+
+
 
 
