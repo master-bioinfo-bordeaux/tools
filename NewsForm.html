@@ -1,18 +1,67 @@
 <!DOCTYPE html>
 <html>
-<header>
+<head lang="en">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="Distribution" content="Global" />
   <meta name="Author" content="Master Bioinformatique de Bordeaux" />
-  <title>Form of News</title>
-  <h1 style="font-family: 'Rock Salt', cursive;">Form of News</h1>
+  <title>Administration of News</title>
   <link rel="stylesheet" type="text/css" media="screen" href="css/stylesheet.css">
-</header>
-<body>
-  <center>
-    <br><br>
-    <a href="NewsCreator.html" target="_blank"><input type="submit" value="Add a news" /></a> <a href="NewsEditor.html" target="_blank"><input type="submit" value="Edit a news" /> <a href="NewsDelator.html" target="_blank"><input type="submit" value="Delete a news" />
-   </center>
- </body>
+  <script type="text/javascript" src="NewsForm.js"></script>
+  <script type="text/javascript" src=" ../img/listimg.json"></script>
+  <script type="application/json" src="http://master-bioinfo-bordeaux.github.io/data/news.json"></script>
+</head>
+<body onload="initNews()">
 
- </html>
+<!-- 	Barre de navigation fixe et prenant toute la largeur de l'écran, tout en haut de la page-->
+    <nav>
+	    <ul>
+	      <li><a class = "button" href="#create" onclick="createNews()">Create</a></li>
+	      <li><a class = "button" href="#modify" onclick="modifyNews()">Modify</a></li>
+	      <li><a class = "button" href="#delete" onclick="deleteNews()">Delete</a><li>
+	      <li><a class = "button" href="javascript:void(0)" onclick="pushNews()">Apply Changes to GitHub</a></li>
+	    </ul>
+    </nav>
+    <br><br><br><br>
+    <h1>Administration of news</h1>
+
+<!-- Partie de création des news, reliée par l'ancre #create dans le bouton -->
+	<div id="create" name="create">
+		<h2>Creation of a news</h2>
+	    <p><label for="title"><h3>Title</h3></label> <br><input type="text" name="title" id="title" required/></p>
+	    <p><label for="intro"><h3>Introduction</h3></label> <br><textarea name="intro" id="intro" rows="1" cols="50" required></textarea></p>
+	    <p><label for="content"><h3>Content</h3></label> <br><textarea name="content" id="content" rows="10" cols="50" required></textarea></p>
+
+	    <div id="iconimg"><h3>Choice of the icon</h3><br>
+	     Biology<br>
+	     <p id="biology"></p>
+	     Teaching<br>
+	     <p id="teaching"></p>
+	     Misc<br>
+	     <p id="misc"></p></div>
+
+	    <h3>Publication date (YYYY/MM/DD)</h3><br>
+	    <p id="pubdate"></p></div>
+
+	     <input type="submit"  onclick="get_value()" value="Publish" />
+
+<!-- Partie d'édition des news, reliée par l'ancre #create dans le bouton -->
+	<div id="modify" name="modify">
+		<h2>Modification of a news</h2><br>
+		Select a news to modify 	
+	    <div id="listForModify"></div>
+        <div id="formModify">
+               <input type="submit"  onclick="edit_news()" value="Modify" />
+        </div>
+    </div>
+
+<!-- Partie de suppression des news, reliée par l'ancre #create dans le bouton -->
+	<div id="delete" name="delete">
+		<h2>Deletion of news</h2><br>
+		Select one (or more) news to delete 	
+	    <div id="listForDeletion"></div>
+        <div id="formDelete">
+               <input type="submit"  onclick="delete_news()" value="Delete" />
+        </div>
+    </div>
+</body>
+</html>
