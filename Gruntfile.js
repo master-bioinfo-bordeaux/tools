@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['../master-bioinfo-bordeaux.github.io/src/courses.js', 'src/calendar.js'],
+        src: ['../master-bioinfo-bordeaux.github.io/src/courses.js', 'src/NewsForm.js','src/CalendarForm.js'],
         dest: 'js/<%= pkg.name %>.js'
       }
     },

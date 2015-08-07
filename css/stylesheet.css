@@ -95,8 +95,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*css du formulaire*/
-input[type=text]{
+#create input[type=text]{
   width:80%;
+}
+
+#rooms input[type=text]{
+  width:30%;
 }
 
 input[type=number]{
@@ -107,4 +111,3 @@ textarea{
   width:100%;
 }
 
-}

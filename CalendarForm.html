@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="Distribution" content="Global" />
+	<meta name="Author" content="Master Bioinformatique de Bordeaux" />
+	<title>Administration of Calendar</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="css/stylesheet.css">
+	<script type="text/javascript" src="js/msbinobi_tools.js"></script>
+</head>
+<body onload="initCalendar()">
+	<!-- 	Barre de navigation fixe et prenant toute la largeur de l'écran, tout en haut de la page-->
+	<nav>
+		<ul>
+			<li><a class = "button" href="#createcal">Create</a></li>
+			<li><a class = "button" href="#modifycal">Modify</a></li>
+			<li><a class = "button" href="#deletecal">Delete</a><li>
+				<li><a class = "button" href="javascript:void(0)" onclick="pushNews()">Apply Changes to GitHub</a></li>
+			</ul>
+		</nav>
+
+		<br><br>
+		<h1>Administration of the calendar</h1>
+
+		<!-- Partie de création des news, reliée par l'ancre #create dans le bouton -->
+		<div id="createcal" name="createcal">
+			<h2>Creation for calendar</h2><br>
+			<ul id="navcreatecal">
+				<li><a class = "button" href="#course">Create a course</a></li>
+				<li><a class = "button" href="#event">Create an event</a></li>
+			</ul>
+			<div id="course" name="course">
+				<h2>Creation of a course</h2><br>
+				<h3>Semester</h3>     <select name="semester" id="semester" onChange="selectUE()"><option value="none" selected></option><option value="7">S7</option><option value="8">S8</option><option value="9">S9</option><option value="10">S10</option></select>
+				 <span id="ue"></span>
+				<br><br>
+				<h3>Lecturer</h3> 
+				<select name="lecturer" id="lecturer"> <!--faire en JSON -->
+					<option value="Beurton-Aimar M.">Beurton-Aimar M.</option>
+					<option value="Taveau J.C.">Taveau J.C.</option>
+					<option value="Thébault P.">Thébault P.</option>
+					<option value="Delmas O.">Delmas O.</option>
+					<option value="Desbarat P.">Desbarat P.</option>
+					<option value="Hernould M.">Hernould M.</option>
+					<option value="Boussicault A.">Boussicault A.</option>
+					<option value="Nogues X.">Nogues X.</option>
+					<option value="Other">Other</option>
+				</select>
+				<br><br>
+				<h3>Start</h3> <!-- chercher pour mettre date du jour-->
+				<select name="start" id="startYear">
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
+					<option value="2017">2017</option>
+					<option value="2018">2018</option>
+					<option value="2019">2019</option>
+					<option value="2020">2020</option>
+				</select>
+				<select name="start" id="startMonth">
+					<option value="01">Jan</option>
+					<option value="02">Feb</option>
+					<option value="03">Mar</option>
+					<option value="04">Apr</option>
+					<option value="05">May</option>
+					<option value="06">Jun</option>
+					<option value="07">Jul</option>
+					<option value="08">Aug</option>
+					<option value="09">Sep</option>
+					<option value="10">Oct</option>
+					<option value="11">Nov</option>
+					<option value="12">Dec</option>
+				</select>
+				<select name="start" id="startDay">
+					<option value="01">01</option>
+					<option value="02">02</option>
+					<option value="03">03</option>
+					<option value="04">04</option>
+					<option value="05">05</option>
+					<option value="06">06</option>
+					<option value="07">07</option>
+					<option value="08">08</option>
+					<option value="09">09</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>	
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>	  	
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+					<option value="24">24</option>	  	
+					<option value="25">25</option>
+					<option value="26">26</option>
+					<option value="27">27</option>
+					<option value="28">28</option>
+					<option value="29">29</option>
+					<option value="30">30</option>
+					<option value="31">31</option>
+				</select>
+				<select name="start" id="startHour">
+					<option value="00" selected>00</option>
+					<option value="08" >08</option>
+					<option value="09" >09</option>
+					<option value="10" >10</option>
+					<option value="11" >11</option>
+					<option value="12" >12</option>
+					<option value="13" >13</option>
+					<option value="14" >14</option>
+					<option value="15" >15</option>
+					<option value="16" >16</option>
+					<option value="17" >17</option>
+					<option value="18" >18</option>
+					<option value="19" >19</option>
+				</select>
+				h
+				<select name="start" id="startMin">
+					<option value="00" selected>00</option>
+					<option value="15">15</option>
+					<option value="30">30</option>
+					<option value="45">45</option>
+				</select>
+				<input type="radio" name="allday" value="allday" id="allday" />All day
+				<br>
+				<h3>End</h3>
+								<select name="start" id="startYear">
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
+					<option value="2017">2017</option>
+					<option value="2018">2018</option>
+					<option value="2019">2019</option>
+					<option value="2020">2020</option>
+				</select>
+				<select name="start" id="startMonth">
+					<option value="01">Jan</option>
+					<option value="02">Feb</option>
+					<option value="03">Mar</option>
+					<option value="04">Apr</option>
+					<option value="05">May</option>
+					<option value="06">Jun</option>
+					<option value="07">Jul</option>
+					<option value="08">Aug</option>
+					<option value="09">Sep</option>
+					<option value="10">Oct</option>
+					<option value="11">Nov</option>
+					<option value="12">Dec</option>
+				</select>
+				<select name="start" id="startDay">
+					<option value="01">01</option>
+					<option value="02">02</option>
+					<option value="03">03</option>
+					<option value="04">04</option>
+					<option value="05">05</option>
+					<option value="06">06</option>
+					<option value="07">07</option>
+					<option value="08">08</option>
+					<option value="09">09</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>	
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>	  	
+					<option value="21">21</option>
+					<option value="22">22</option>
+					<option value="23">23</option>
+					<option value="24">24</option>	  	
+					<option value="25">25</option>
+					<option value="26">26</option>
+					<option value="27">27</option>
+					<option value="28">28</option>
+					<option value="29">29</option>
+					<option value="30">30</option>
+					<option value="31">31</option>
+				</select>
+				<select name="start" id="startHour">
+					<option value="00" selected>00</option>
+					<option value="08" >08</option>
+					<option value="09" >09</option>
+					<option value="10" >10</option>
+					<option value="11" >11</option>
+					<option value="12" >12</option>
+					<option value="13" >13</option>
+					<option value="14" >14</option>
+					<option value="15" >15</option>
+					<option value="16" >16</option>
+					<option value="17" >17</option>
+					<option value="18" >18</option>
+					<option value="19" >19</option>
+				</select>
+				h
+				<select name="start" id="startMin">
+					<option value="00" selected>00</option>
+					<option value="15">15</option>
+					<option value="30">30</option>
+					<option value="45">45</option>
+				</select>
+				<br>
+				<br>
+				<h3>Location</h3>
+				<select name="location" id="location" onChange="selectRoom()">
+					<optgroup label="Talence">
+					<option value="CREMI::Talence" selected>CREMI</option>
+					<option value="A21::Talence" >A21</option>
+					<option value="A29::Talence" >A29</option>
+					<option value="A30::Talence" >A30</option>
+					<option value="B4::Talence" >B4</option>
+					<option value="B5::Talence" >B5</option>
+					<option value="B7::Talence" >B7</option>
+				</optgroup>
+				<optgroup label="Carreire">
+					<option value="Amphi A5::Carreire" >Amphi A5</option>
+					<option value="ED::Carreire" >Bâtiment ED</option>
+				</optgroup>
+				</select><span id="rooms"><h3>Room</h3><input type="text" name="room" id="room" required/></span> <br><br>
+				<h3>Students</h3>
+				<select name="groups" id="groups">
+					<option value="all" selected>All</option>
+					<option value="A">A</option>
+					<option value="B">B</option>
+				</select>
+				<br><br><!--groups-->
+				<h3>Notes</h3><textarea name="notes" id="content" rows="10" cols="50" required></textarea>
+
+				<input type="submit"  onclick="createCourse()" value="Create" />
+			</div>
+
+<!--  			<div id="event" name="event">
+			</div>
+			<h3>Author<h3>     <input type="text" name="author" id="author" required/><br><br>
+				<h3>Summary / ID of course</h3>     <input type="text" name="title" id="summary" required/><br><br>
+				<h3>Notes</h3>     <textarea name="notes" id="content" rows="10" cols="50" ></textarea>
+
+				<h3>Groups concerned</h3>     
+				<h3>Teacher<h3>
+
+					<div id="iconimg"><h3>Choice of the icon</h3><br>
+						Biology<br>
+						<p id="biology"></p>
+						Teaching<br>
+						<p id="teaching"></p>
+						Misc<br>
+						<p id="misc"></p></div>
+
+						<h3>Publication date (YYYY/MM/DD)</h3><br>
+						<p id="pubdate"></p>
+
+						<input type="submit" onclick="createCalendar()" value="Publish" /></div>
+						<div id="result"></div>
+
+						<div id="modify" name="modify">
+							<h2>Modification of a calendar's event</h2><br>
+							Select an event to modify 	
+							<div id="listForModify"></div>
+							<div id="NewsforModify">
+								<input type="submit" onclick="modifyCalendar()" value="Modify" /></div>
+								<div id="formModify">
+
+								</div>
+							</div>
+
+							<div id="delete" name="delete">
+								<h2>Deletion of a calendar's event</h2><br>
+								Select an event to delete 	
+								<div id="listForDeletion"></div>
+								<div id="formDelete">
+									<input type="submit"  onclick="deleteCalendar()" value="Delete" />
+								</div>
+							</div>  -->
+						</body>
+						</html>
