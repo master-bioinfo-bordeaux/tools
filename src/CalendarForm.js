@@ -2,6 +2,7 @@ var listUE7 = [];
 var listUE8 = [];
 var listUE9 = [];
 var listUE10 = [];
+
 function initCalendar() {
 	var sem;
 	var acro;
@@ -32,6 +33,9 @@ function initCalendar() {
 				listUE10.sort();
 			}	
 		}		
+	}
+	for (var l in locations){
+		console.log(locations[l].name);
 	}
 }
 
