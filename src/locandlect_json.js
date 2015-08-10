@@ -55,7 +55,7 @@ var locations = {
 }
 
 var lecturers = {
- 'Lecturers ' : [{
+    'Lecturers ' : [{
         'name':"Beurton-Aimar M"
     },
     {
@@ -81,6 +81,36 @@ var lecturers = {
     },
     {
         'name':"Other"
-    }
-    ]
+    }]
+}
+
+var groups = {
+    'Groups' : [{
+        'name':"All"
+    },
+    {
+        'name':"A"
+    },
+    {
+        'name':"B"
+    }]
+}
+
+var parcours = {
+    'Parcours' : [{
+        'name':"C++Bio",
+        'value':1
+    },
+    {
+        'name':"GenOrg",
+        'value':2
+    },
+    {
+        'name':"OrgEco",
+        'value':4
+    },
+    {
+        'name':"BSC",
+        'value':8
+    }]
 }
