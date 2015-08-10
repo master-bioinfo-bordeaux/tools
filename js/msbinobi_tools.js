@@ -1113,6 +1113,10 @@ function deleteNews(){
 var listUE8 = [];
 var listUE9 = [];
 var listUE10 = [];
+var locTalence = [];
+var locCarreire = [];
+var listbat = [];
+
 function initCalendar() {
 	var sem;
 	var acro;
@@ -1144,6 +1148,20 @@ function initCalendar() {
 			}	
 		}		
 	}
+	for (var l in locations){
+		var nameloc= locations[l].name;
+		var selectloc=nameloc;
+		if(locations[l].loc ==="Talence"){
+			locTalence.push(nameloc);
+		}
+		else if(locations[l].loc ==="Carreire"){
+			locCarreire.push(nameloc);
+		}
+		if(locations[l].type !=="bat"){
+			listbat.push(nameloc);
+		}
+		document.getElementById("location").innerHTML+=selectloc;
+	}
 }
 
 function selectUE(){
@@ -1172,11 +1190,104 @@ function selectUE(){
 
 function selectRoom(){
 	var loc=document.getElementById('location').value;
-	if (loc==="CREMI::Talence" || loc==="A21::Talence" || loc==="A29::Talence" ||loc==="A30::Talence" ||loc==="B4::Talence" || loc==="B5::Talence" || loc==="B7::Talence" || loc==="ED::Carreire"){
-		var html='<h3>Room</h3>     <input type="text" name="room" id="room" required/>';
+	for (var l=0;l<listbat.length;l++){
+		console.log(listbat[l]);
+		console.log(loc);
+		if (loc===listbat[l]){
+			var html=' ';
+		}
+		else{
+			var html='<h3>Room</h3>     <input type="text" name="room" id="room" required/>';;
+		}
+		document.getElementById("rooms").innerHTML=html;
 	}
-	if (loc==="Amphi A5::Carreire"){
-		var html=' ';
-	}
-	document.getElementById("rooms").innerHTML=html;
+	
+}
+
+
+;var locations = {
+    'CREMI::Talence':{
+        'name': "CREMI::Talence",
+        'loc' : "Talence",
+        'type': "bat"
+    },
+
+    'A21::Talence':{
+        'name': "A21::Talence",
+        'loc' : "Talence",
+        'type': "bat"
+    },
+
+    'A29::Talence':{
+        'name': "A29::Talence",
+        'loc' : "Talence",
+        'type': "bat"
+    },
+
+    'A30::Talence':{
+        'name': "A30::Talence",
+        'loc' : "Talence",
+        'type': "bat"
+    },
+
+    'B4::Talence':{
+        'name': "B4::Talence",
+        'loc' : "Talence",
+        'type': "bat"
+    },
+
+    'B5::Talence' :{
+        'name': "B5::Talence",
+        'loc' : "Talence",
+        'type': "bat",
+    },
+
+    'B7::Talence':{
+        'name': "B7::Talence",
+        'loc' : "Talence",
+        'type': "bat"
+    },
+
+    'AmphiA5::Carreire':{
+        'name': "AmphiA5::Carreire",
+        'loc' : "Carreire",
+        'type': "amphi"
+    },
+
+    'ED:Carreire':{
+        'name': "ED::Carreire",
+        'loc' : "Carreire",
+        'type': "bat"
+    }
+}
+
+var lecturers = {
+ 'Lecturers ' : [{
+        'name':"Beurton-Aimar M"
+    },
+    {
+        'name':"Taveau JC"
+    },
+    {
+        'name':"Thébault P"
+    },
+    {
+        'name':"Delmas O"
+    },
+    {
+        'name':"Desbarat P"
+    },
+    {
+        'name':"Hernould M"
+    },
+    {
+        'name':"Boussicault A"
+    },
+    {
+        'name':"Nogues X"
+    },
+    {
+        'name':"Other"
+    }
+    ]
 }
