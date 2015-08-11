@@ -51,6 +51,11 @@ var locations = {
         'name': "ED::Carreire",
         'loc' : "Carreire",
         'type': "bat"
+    },
+    'Autre-Aucun':{
+        'name': "Autre-Aucun",
+        'loc' : "Autre",
+        'type' : "amphi"
     }
 }
 

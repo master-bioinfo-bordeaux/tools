@@ -1121,6 +1121,8 @@ var locTalence = [];
 var locCarreire = [];
 var listbat = [];
 
+var myCalendar;
+
 function initCalendar() {
 	//création des listes de cours
 	var sem;
@@ -1268,6 +1270,31 @@ function initCalendar() {
 		}
 	}	
 	document.getElementById("parcours").innerHTML+=parselect;
+	getCalendarJSON();
+}
+
+function getCalendarJSON(){
+	var xhr = new XMLHttpRequest();
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+        	myCalendar = JSON.parse(xhr.responseText); // Données textuelles récupérées
+	    		updateCalendarDisplay(myCalendar);
+    	}
+		
+	};
+	xhr.open("GET", "calendar_json.js", true);
+	xhr.send(null);
+}
+
+function updateCalendarDisplay() {
+	console.log(myCalendar)
+	document.getElementById("listForModifycal").innerHTML='';
+	// document.getElementById("listForDeletioncal").innerHTML='';
+	  for(var n in myCalendar){
+  		document.getElementById("listForModifycal").innerHTML+='<input type="radio" name="titlecalmod" id="'+myCalendar[n]["summary"]+'" class="titlecalmod"/> <label for="'+myCalendar[n]["summary"]+'">'+myCalendar[n]["summary"]+'</label><br />'; 
+  		// document.getElementById("listForDeletion").innerHTML+='<input type="radio" name="titlenewsdel" id="'+myNews[n]["title"]+'" class="titlenewsdel"/> <label for="'+myNews[n]["title"]+'">'+myNews[n]["title"]+'</label><br />'; 
+	}
 
 }
 
@@ -1324,46 +1351,51 @@ function selectRoomEvent(){
 function createCalendarCourse(){
 
 	var newCourse={};
-	var sem=document.getElementById("semester").value;
-	if (sem===7 || sem===8){
-		var year=1;
-	}
-	else{
-		var year=2;
-	}
-	var author=document.getElementById("author").value;
-	var datecrea = new Date();
-	var cday = ("0" + (datecrea.getDate())).slice(-2);
-	var cmonth = ("0" + (datecrea.getMonth()+1)).slice(-2);
-	var cyear = datecrea.getFullYear().toString();
-	var chour = ("0" + (datecrea.getHours())).slice(-2);
-	var cmin = ("0" + (datecrea.getMinutes())).slice(-2);
-	var csec = ("0" + (datecrea.getSeconds())).slice(-2);
-	var creadate = cyear+cmonth+cday+"T"+chour+cmin+csec;
 
-	var summary=document.getElementById("uesemester").value;
-	var ue= summary.split("-");
-	var stu= course_data[ue[0]].students;
-	var stusplit = stu.split(",");
+	//création de l'ID
+		//extraction de l'année (M1 ou M2) via le semestre
+		var sem=document.getElementById("semester").value;
+		if (sem===7 || sem===8){
+			var year=1;
+		}
+		else{
+			var year=2;
+		}
+		//extraction de l'auteur de la news (à changer par utilisateur GitHub)
+		var author=document.getElementById("author").value;
+		//extraction de la date de création
+		var datecrea = new Date();
+		var cday = ("0" + (datecrea.getDate())).slice(-2);
+		var cmonth = ("0" + (datecrea.getMonth()+1)).slice(-2);
+		var cyear = datecrea.getFullYear().toString();
+		var chour = ("0" + (datecrea.getHours())).slice(-2);
+		var cmin = ("0" + (datecrea.getMinutes())).slice(-2);
+		var csec = ("0" + (datecrea.getSeconds())).slice(-2);
+		var creadate = cyear+cmonth+cday+"T"+chour+cmin+csec;
+		//extraction de la somme des valeurs des parcours ayant ce cours
+	var summary=document.getElementById("uesemester").value; //extraction de l'UE entière
+	var ue= summary.split("-"); //séparation pour obtenir l'ID et l'acronyme de l'UE 
+	var stu= course_data[ue[0]].students; //sauvegarde de l'ID puis recherche des étudiants pour cette UE
+	var stusplit = stu.split(","); //séparation des différents groupes
 	var parc=[];
 	for (var i in stusplit){
 		var parca = stusplit[i].split("[");	
-		parc.push(parca[0]);
+		parc.push(parca[0]); //récupération des noms de groupes seuls
 	}
 	var sum=0;
 	for(var p in parc){
 		console.log(p);
-		sum=sum+parcours["Parcours"][p].value;
+		sum=sum+parcours["Parcours"][p].value; //addition des valeurs des groupes
 	}
 	var sumsum=(sum.toString(16))
 	if (sumsum==="f"){
-		sumsum="F"
+		sumsum="F" //passage de la valeur en hexadecimal
 	}
+		//ajout dans l'objet de l'ID et du summary
+		newCourse.id = "C"+year+sumsum+creadate+"@"+author;
+		newCourse.summary=summary
 
-
-	newCourse.id = "C"+year+sumsum+creadate+"@"+author;
-	newCourse.summary=summary
-
+	//extraction de la date de début et de la date de fin du cours
 	var yearstart=document.getElementById("startYear").value;
 	var monthstart=document.getElementById("startMonth").value;
 	var daystart=document.getElementById("startDay").value;
@@ -1379,18 +1411,22 @@ function createCalendarCourse(){
 		var minend=59;
 	}
 	else{
-	var yearend=document.getElementById("endYear").value;
-	var monthend=document.getElementById("endMonth").value;
-	var dayend=document.getElementById("endDay").value;
-	var hourend=document.getElementById("endHour").value;
-	var minend=document.getElementById("endMin").value;		
+		var yearend=document.getElementById("endYear").value;
+		var monthend=document.getElementById("endMonth").value;
+		var dayend=document.getElementById("endDay").value;
+		var hourend=document.getElementById("endHour").value;
+		var minend=document.getElementById("endMin").value;		
 	}
 	newCourse.date_start=yearstart+monthstart+daystart+"T"+hourstart+minstart;
 	newCourse.date_end=yearend+monthend+dayend+"T"+hourend+minend;
 
+	//extraction des groupes d'étudiants concernés (hors parcours)
 	newCourse.group=document.getElementById("groups").value;
+
+	//extracteur du professeur 
 	newCourse.lecturer=document.getElementById("lecturer").value;
 
+	//extraction du lieu du cours
 	var bat=document.getElementById("location").value;
 	if (locations[bat].type!=="bat"){
 		newCourse.location=bat;
@@ -1400,8 +1436,10 @@ function createCalendarCourse(){
 		newCourse.location="room"+room+"@"+bat;
 	}
 
+	//extraction de la description du cours
 	newCourse.description=document.getElementById("content").value;
 
+	//passage de l'objet js en JSON
 	JSON.stringify(newCourse);
 }
 
@@ -1409,45 +1447,46 @@ function createCalendarEvent(){
 
 	var newEvent={};
 
-	var author=document.getElementById("authorevent").value;
-	var datecrea = new Date();
-	var cday = ("0" + (datecrea.getDate())).slice(-2);
-	var cmonth = ("0" + (datecrea.getMonth()+1)).slice(-2);
-	var cyear = datecrea.getFullYear().toString();
-	var chour = ("0" + (datecrea.getHours())).slice(-2);
-	var cmin = ("0" + (datecrea.getMinutes())).slice(-2);
-	var csec = ("0" + (datecrea.getSeconds())).slice(-2);
-	var creadate = cyear+cmonth+cday+"T"+chour+cmin+csec;
-
-	var year = document.getElementById("yearstudy").value;
-
-	var sum=0;
-	var checkboxes = document.getElementById("parcours").getElementsByTagName("input");
+	//création de l'ID
+		//extraction de l'auteur de l'event (à remplacer par l'utilisateur GitHub)
+		var author=document.getElementById("authorevent").value;
+		//extraction de la date de création
+		var datecrea = new Date();
+		var cday = ("0" + (datecrea.getDate())).slice(-2);
+		var cmonth = ("0" + (datecrea.getMonth()+1)).slice(-2);
+		var cyear = datecrea.getFullYear().toString();
+		var chour = ("0" + (datecrea.getHours())).slice(-2);
+		var cmin = ("0" + (datecrea.getMinutes())).slice(-2);
+		var csec = ("0" + (datecrea.getSeconds())).slice(-2);
+		var creadate = cyear+cmonth+cday+"T"+chour+cmin+csec;
+		//extraction de l'année concernée (M1 ou M2)
+		var year = document.getElementById("yearstudy").value;
+		//extraction des parcours concernés
+		var sum=0;
+	var checkboxes = document.getElementById("parcours").getElementsByTagName("input"); //extraction des différents input de l'ID (ici que checkboxes)
 	for (var i = 0, iMax = checkboxes.length; i < iMax; ++i) {
-   		var check = checkboxes[i];
+   		var check = checkboxes[i]; //séparation de chacune des checkboxes
    		if (check.type == "checkbox" && check.checked) {
-   			sumnum=parseInt(check.value)
-   			sum=sum+sumnum;
+   			sumnum=parseInt(check.value) 
+   			sum=sum+sumnum; //si coché, extraction de la valeur du parcours puis addition de cette valeur avec la somme des précédentes
    		}
-	}
-	var sumsum=(sum.toString(16))
+   	}
+	var sumsum=(sum.toString(16)) //passage en hexadécimal
 	if (sumsum==="f"){
-		sumsum="F"
+		sumsum="F" 
 	}
+		//creation de l'ID à partir des données extraites
+		newEvent.id = "E"+year+sumsum+creadate+"@"+author;
 
+	//extraction du titre
+	newEvent.summary=document.getElementById("summaryevent").value;
 
-		// sum=sum+parcours["Parcours"][p].value;
-
-
-	newEvent.id = "E"+year+sumsum+creadate+"@"+author;
-	console.log(newEvent.id);
-	newEvent.summary=document.getElementById("uesemester").value;
-
-	var yearstart=document.getElementById("startYear").value;
-	var monthstart=document.getElementById("startMonth").value;
-	var daystart=document.getElementById("startDay").value;
-	var hourstart=document.getElementById("startHour").value;
-	var minstart=document.getElementById("startMin").value;
+	//extraction de la date de début et de fin de l'event
+	var yearstart=document.getElementById("startYearevent").value;
+	var monthstart=document.getElementById("startMonthevent").value;
+	var daystart=document.getElementById("startDayevent").value;
+	var hourstart=document.getElementById("startHourevent").value;
+	var minstart=document.getElementById("startMinevent").value;
 	if ((hourstart===00 && minstart===00) || (allday.checked) ){
 		var hourstart="00";
 		var minstart="00";
@@ -1458,31 +1497,83 @@ function createCalendarEvent(){
 		var minend=59;
 	}
 	else{
-	var yearend=document.getElementById("endYear").value;
-	var monthend=document.getElementById("endMonth").value;
-	var dayend=document.getElementById("endDay").value;
-	var hourend=document.getElementById("endHour").value;
-	var minend=document.getElementById("endMin").value;		
+		var yearend=document.getElementById("endYearevent").value;
+		var monthend=document.getElementById("endMonthevent").value;
+		var dayend=document.getElementById("endDayevent").value;
+		var hourend=document.getElementById("endHourevent").value;
+		var minend=document.getElementById("endMinevent").value;		
 	}
-	newCourse.date_start=yearstart+monthstart+daystart+"T"+hourstart+minstart;
-	newCourse.date_end=yearend+monthend+dayend+"T"+hourend+minend;
+	newEvent.date_start=yearstart+monthstart+daystart+"T"+hourstart+minstart;
+	newEvent.date_end=yearend+monthend+dayend+"T"+hourend+minend;
 
-	newCourse.group=document.getElementById("groups").value;
-	newCourse.lecturer=document.getElementById("lecturer").value;
+	//extraction de la personne faisant l'événement
+	newEvent.lecturer=document.getElementById("lecturerevent").value;
 
-	var bat=document.getElementById("location").value;
+	//extraction du lieu 
+	var bat=document.getElementById("locationevent").value;
 	if (locations[bat].type!=="bat"){
-		newCourse.location=bat;
+		newEvent.location=bat;
 	}
 	else{
 		var room=document.getElementById("room").value;
-		newCourse.location="room"+room+"@"+bat;
+		newEvent.location="room"+room+"@"+bat;
 	}
 
-	newCourse.description=document.getElementById("content").value;
+	//extraction de la description
+	newEvent.description=document.getElementById("contentevent").value;
 
-	JSON.stringify(newCourse);
-};var locations = {
+	//extraction des étudiants concernés
+		//extraction de l'année concernée
+		newEvent.year=document.getElementById("yearstudy").value;
+		//extraction du(des) parcours concerné(s)
+	var checkboxes = document.getElementById("parcours").getElementsByTagName("input");//extraction des différents input de l'ID (ici que checkboxes)
+	var partot=[];
+	for (var i = 0, iMax = checkboxes.length; i < iMax; ++i) {
+  		var check = checkboxes[i]; //séparation de chacune des checkboxes
+  		if (check.type == "checkbox" && check.checked) {
+  			partot.push(check.name);
+  		}
+  	}
+  	newEvent.students=partot.toString();
+
+   	//extraction de l'obligation ou non d'assister à l'event
+   	newEvent.presence=document.getElementById("choice").value;
+
+   	console.log(newEvent);
+
+   	JSON.stringify(newEvent);
+   }
+
+function modifyCalendar(){
+   	var nbtitles = document.getElementsByClassName("titlecalmod");
+
+   	for (var i = 0; i< nbtitles.length; i++)
+   	{
+   		if (nbtitles[i].checked)
+   		{
+		    	var content = myCalendar[i]["contents"].split('<!--more-->'); //à changer sur le json définitif
+		    	console.log(content)
+		    	document.getElementById("CalendarforModify").innerHTML='<h3>Title</h3>     <input type="text" name="title" id="title" value="'+nbtitles[i].id+'"/><br><br>';
+		    	document.getElementById("CalendarforModify").innerHTML+='<h3>Introduction</h3>     <input type="text" name="intro" id="intro" value="'+content[0]+'"/><br><br>';
+		    	document.getElementById("CalendarforModify").innerHTML+='<h3>Content</h3><textarea name="content" id="content" rows="10" cols="50" >'+content[1]+'</textarea>';
+		    	document.getElementById("CalendarforModify").innerHTML+='<input type="submit" onclick="modifyNewsfromJSON()" value="Modify" />';
+		    }
+		}
+		updateNewsDisplay();
+	}
+
+function deleteNews(){
+  		var nbtitles = document.getElementsByClassName("titlecaldel");
+		for (var i = 0; i< nbtitles.length; i++)
+		{
+		    if (nbtitles[i].checked)
+		    {
+		        myCalendar.splice(i,1);
+	        }
+		}
+		getCalendarJSON();
+}
+;var locations = {
     'CREMI::Talence':{
         'name': "CREMI::Talence",
         'loc' : "Talence",
@@ -1535,6 +1626,11 @@ function createCalendarEvent(){
         'name': "ED::Carreire",
         'loc' : "Carreire",
         'type': "bat"
+    },
+    'Autre-Aucun':{
+        'name': "Autre-Aucun",
+        'loc' : "Autre",
+        'type' : "amphi"
     }
 }
 
@@ -1598,4 +1694,138 @@ var parcours = {
         'name':"BSC",
         'value':8
     }]
-}
+};[
+    {
+        "ID"        : "C1F20150731T145900@userGithub", 
+        "summary"   : "KM1BS10U-Stats", 
+        "date_start": "20150831T1400", 
+        "date_end"  : "20150831T1700", 
+        "group"     : "All",
+        "lecturer"  : "M Beurton-Aimar",
+        "location"  : "room24@ED::Carreire",
+        "description" : "Read the article \"Beetroot Plantations in Himalaya\" before coming.",
+        "image"     : "biology",
+        "comment"   : "AEB-Stats"
+    },
+    {
+        "ID"        : "C1F20150731T145915@username",
+        "summary"   : "J1BS7M01-Imag",
+        "date_start": "20150804T0800", 
+        "date_end"  : "20150804T1200", 
+        "group"     : "A",
+        "lecturer"  : "JC Taveau",
+        "location"  : "room24@CREMI::Talence",
+        "description"   : "",
+        "image"     : "hybrid",
+        "comment"   : "BioMod-Imag"
+    },
+    {
+        "ID"        : "C1F20150731T145940@username",
+        "summary"   : "J1BS7M01-Imag",
+        "date_start": "20150804T0800", 
+        "date_end"  : "20150804T1200", 
+        "group"     : "B",
+        "lecturer"  : "P Thébault",
+        "location"  : "room41@ED::Carreire",
+        "description"   : ""
+    },
+    {
+        "ID"            : "C2F20150801T1459@jeesay",
+        "summary"       : "F1BS0201",
+        "comment"       : "StageM2",
+        "date_start"    : "20150301", 
+        "date_end"      : "20150831", 
+        "group"         : "All",
+        "lecturer"      : "",
+        "location"      : "",
+        "description"   : ""
+    },
+    {
+        "ID"            : "E1F20150801T1459@jeesay",
+        "summary"       : "Summer holidays",
+        "date_start"    : "20150701", 
+        "date_end"      : "20150831", 
+        "location"      : "",
+        "groups"        : "All",
+        "lecturer"      : "",
+        "description"   : "",
+        "students"      : "C++BIO[required],GENORG[required],ORGECO[required],BSC[required]",
+        "image"         : "summer"
+    },
+    {
+        "ID"            : "E0F20150731T145923@jeesay",
+        "summary"       : "Réunion de rentrée M1 et M2",
+        "lecturer"      : "",
+        "date_start"    : "20150701T0900", 
+        "date_end"      : "20150831T1200",
+        "location"      : "LaBRI::Talence",
+        "students"      : "C++BIO[required],GENORG[required],ORGECO[required],BSC[required]",
+        "description"   : "Présentation des divers enseignements, organisation du master pour chacune des années.",
+        "image"         : "calendar",
+        "comment"       : ""
+    }
+];[
+    {
+        "ID": "20150901T140039@userGithub",
+        "date": "20150901",
+        "title": "NEWS #1: RENTREE 2015 M1 M2",
+        "contents": "Curabitur feugiat urna a eros viverra, quis vulputate ipsum sollicitudin. Vestibulum efficitur magna nulla, porta tincidunt nunc lobortis vitae.<!--more-->Here is the remaining text only available if you click on the 'More...' button ... Vivamus a leo ipsum. Curabitur rutrum dictum mauris quis suscipit. Aliquam auctor metus non dolor rhoncus scelerisque.",
+        "image": "misc_calendar" 
+    },
+    {
+        "ID": "20150901T140039@userGithub",
+        "date" : "20150829", 
+        "title": "NEWS #2: Etiam a metus sit",
+        "contents": "Etiam a metus sit amet lectus facilisis accumsan vitae sit amet mauris. Nulla facilisi. Praesent turpis magna",        
+        "image": "bio_flask" 
+    },
+    {
+        "ID": "20150901T140039@userGithub",
+        "date" : "20150819", 
+        "title": "NEWS #3: Lorem ipsum dolor sit amet",
+        "contents": "Curabitur feugiat urna a eros viverra, quis vulputate ipsum sollicitudin. Vestibulum efficitur magna nulla, porta tincidunt nunc lobortis vitae.<!--more-->Here is the remaining text only available if you click on the 'More...' button ... Vivamus a leo ipsum. Curabitur rutrum dictum mauris quis suscipit. Aliquam auctor metus non dolor rhoncus scelerisque.",
+        "image": "teach_keyboard" 
+    },
+    {
+        "ID": "20150901T140039@userGithub",
+        "date" : "2015-07-23",
+        "title": "NEWS #4: Nulla facilisi. Praesent turpis magna.",
+        "contents": "Curabitur feugiat urna a eros viverra, quis vulputate ipsum sollicitudin. Vestibulum efficitur magna nulla, porta tincidunt nunc lobortis vitae.<!--more-->Here is the remaining text only available if you click on the 'More...' button ... Vivamus a leo ipsum. Curabitur rutrum dictum mauris quis suscipit. Aliquam auctor metus non dolor rhoncus scelerisque.",
+        "image": "teach_conf" 
+    },
+    {
+        "ID": "20150901T140039@userGithub",
+        "date" : "2015-07-11", 
+        "title": "NEWS #5: Lectus facilisis accumsan",
+        "contents": "Curabitur feugiat urna a eros viverra, quis vulputate ipsum sollicitudin. Vestibulum efficitur magna nulla, porta tincidunt nunc lobortis vitae.<!--more-->Here is the remaining text only available if you click on the 'More...' button ... Vivamus a leo ipsum. Curabitur rutrum dictum mauris quis suscipit. Aliquam auctor metus non dolor rhoncus scelerisque.",
+        "image": "bio_rack" 
+    },
+    {
+        "ID": "20150901T140039@userGithub",
+        "date" : "2015-06-21", 
+        "title": "NEWS #6: At last but not least",
+        "contents": "Curabitur feugiat urna a eros viverra, quis vulputate ipsum sollicitudin. Vestibulum efficitur magna nulla, porta tincidunt nunc lobortis vitae.<!--more-->Here is the remaining text only available if you click on the 'More...' button ... Vivamus a leo ipsum. Curabitur rutrum dictum mauris quis suscipit. Aliquam auctor metus non dolor rhoncus scelerisque.",
+        "image": "misc_calendar" 
+    },
+    {
+        "ID": "20150901T140039@userGithub",
+        "date" : "2015-06-19",
+        "title": "NEWS #7: At last but not least",
+        "contents": "Curabitur feugiat urna a eros viverra, quis vulputate ipsum sollicitudin. Vestibulum efficitur magna nulla, porta tincidunt nunc lobortis vitae.<!--more-->Here is the remaining text only available if you click on the 'More...' button ... Vivamus a leo ipsum. Curabitur rutrum dictum mauris quis suscipit. Aliquam auctor metus non dolor rhoncus scelerisque.",
+        "image": "misc_calendar" 
+    },
+    {
+        "ID": "20150901T140039@userGithub",
+        "date" : "2015-05-30", 
+        "title": "NEWS #8: At last but not least",
+        "contents": "Curabitur feugiat urna a eros viverra, quis vulputate ipsum sollicitudin. Vestibulum efficitur magna nulla, porta tincidunt nunc lobortis vitae.<!--more-->Here is the remaining text only available if you click on the 'More...' button ... Vivamus a leo ipsum. Curabitur rutrum dictum mauris quis suscipit. Aliquam auctor metus non dolor rhoncus scelerisque.",
+        "image": "misc_calendar" 
+    },
+    {
+        "ID": "20150901T140039@userGithub",
+        "date" : "2015-05-07",
+        "title": "NEWS #9: At last but not least",
+        "contents": "Curabitur feugiat urna a eros viverra, quis vulputate ipsum sollicitudin. Vestibulum efficitur magna nulla, porta tincidunt nunc lobortis vitae.<!--more-->Here is the remaining text only available if you click on the 'More...' button ... Vivamus a leo ipsum. Curabitur rutrum dictum mauris quis suscipit. Aliquam auctor metus non dolor rhoncus scelerisque.",
+        "image": "misc_calendar" 
+    }
+]
