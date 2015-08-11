@@ -55,7 +55,8 @@ var locations = {
 }
 
 var lecturers = {
-    'Lecturers ' : [{
+    'Lecturers ' : [
+    {
         'name':"Beurton-Aimar M"
     },
     {
@@ -98,15 +99,15 @@ var groups = {
 
 var parcours = {
     'Parcours' : [{
-        'name':"C++Bio",
+        'name':"C++BIO",
         'value':1
     },
     {
-        'name':"GenOrg",
+        'name':"GENORG",
         'value':2
     },
     {
-        'name':"OrgEco",
+        'name':"ORGECO",
         'value':4
     },
     {
