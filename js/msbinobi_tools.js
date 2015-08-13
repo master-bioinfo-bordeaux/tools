@@ -1123,6 +1123,9 @@ var listbat = [];
 
 var myCalendar;
 
+var util = require("util");
+var fs = require("fs");
+
 function initCalendar() {
 	//création des listes de cours
 	var sem;
@@ -1441,6 +1444,7 @@ function createCalendarCourse(){
 
 	//passage de l'objet js en JSON
 	JSON.stringify(newCourse);
+	fs.appendFileSync("calendar_essai.json", newCourse, "UTF-8");
 }
 
 function createCalendarEvent(){

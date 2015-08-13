@@ -330,6 +330,7 @@ function createCalendarCourse(){
 
 	//passage de l'objet js en JSON
 	JSON.stringify(newCourse);
+
 }
 
 function createCalendarEvent(){
