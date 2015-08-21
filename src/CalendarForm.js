@@ -8,9 +8,11 @@ var listUE10 = [];
 var listidUE10= [];
 var locTalence = [];
 var locCarreire = [];
+var listlect = [];
 var listbat = [];
-
+var listbatmodify = [];
 var myCalendar;
+
 
 function initCalendar() {
 	//création des listes de cours
@@ -50,14 +52,10 @@ function initCalendar() {
 	}
 	//création de la liste des professeurs
 	var lectselect='';
-	var listlect=[];
 	for (var lec in lecturers){
-		for (var na=0;na<lecturers[lec].length;na++){
-			var namelec= lecturers[lec][na].name;
+			var namelec= lecturers[lec].name;
 			listlect.push(namelec)
-		}
 	}
-
 	listlect.sort();
 	for (var llec in listlect){
 		lectselect +='<option value="'+listlect[llec]+'">'+listlect[llec]+'</option>';
@@ -142,21 +140,17 @@ function initCalendar() {
 	//création de la liste des groupes
 	var groupselect='';
 	for (var g in groups){
-		for (var n=0;n<groups[g].length;n++){
-			var namegroup= groups[g][n].name;
-			groupselect +='<option value="'+namegroup+'">'+namegroup+'</option>';
-		}
+		var namegroup= groups[g].name;
+		groupselect +='<option value="'+namegroup+'">'+namegroup+'</option>';
 	}
 	document.getElementById("groups").innerHTML+=groupselect;
 
 	//création de la liste des parcours
 	var parselect='';
 	for (var g in parcours){
-		for (var n=0;n<parcours[g].length;n++){
-			var namepar= parcours[g][n].name;
-			var typepar= parcours[g][n].value;
-			parselect +=' <input type="checkbox" name="'+namepar+'" id="'+namepar+'" value="'+typepar+'" /> <label for="'+namepar+'">'+namepar+'</label>';
-		}
+		var namepar= parcours[g].name;
+		var typepar= parcours[g].value;
+		parselect +=' <input type="checkbox" name="'+namepar+'" id="'+namepar+'" value="'+typepar+'" checked /> <label for="'+namepar+'">'+namepar+'</label>';
 	}	
 	document.getElementById("parcours").innerHTML+=parselect;
 	getCalendarJSON();
@@ -172,19 +166,21 @@ function getCalendarJSON(){
     	}
 		
 	};
-	xhr.open("GET", "calendar_json.js", true);
+	xhr.open("GET", "src/calendar_json.js", true);
 	xhr.send(null);
 }
 
 function updateCalendarDisplay() {
-	console.log(myCalendar)
 	document.getElementById("listForModifycal").innerHTML='';
-	// document.getElementById("listForDeletioncal").innerHTML='';
+	document.getElementById("listForDeletioncal").innerHTML='';
+	var listmodify='';
+	var listdelete='';
 	  for(var n in myCalendar){
-  		document.getElementById("listForModifycal").innerHTML+='<input type="radio" name="titlecalmod" id="'+myCalendar[n]["summary"]+'" class="titlecalmod"/> <label for="'+myCalendar[n]["summary"]+'">'+myCalendar[n]["summary"]+'</label><br />'; 
-  		// document.getElementById("listForDeletion").innerHTML+='<input type="radio" name="titlenewsdel" id="'+myNews[n]["title"]+'" class="titlenewsdel"/> <label for="'+myNews[n]["title"]+'">'+myNews[n]["title"]+'</label><br />'; 
+  		listmodify+='<input type="radio" name="titlecalmod" id="'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'" class="titlecalmod"/> <label for="'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'">'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'</label><br />'; 
+  		listdelete+='<input type="radio" name="titlecaldel" id="'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'" class="titlecaldel"/> <label for="'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'">'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'</label><br />'; 
 	}
-
+	document.getElementById("listForModifycal").innerHTML=listmodify;
+	document.getElementById("listForDeletioncal").innerHTML=listdelete;
 }
 
 function selectUE(){
@@ -271,15 +267,14 @@ function createCalendarCourse(){
 		var parca = stusplit[i].split("[");	
 		parc.push(parca[0]); //récupération des noms de groupes seuls
 	}
-	var sum=0;
-	for(var p in parc){
-		console.log(p);
-		sum=sum+parcours["Parcours"][p].value; //addition des valeurs des groupes
-	}
-	var sumsum=(sum.toString(16))
-	if (sumsum==="f"){
+	// var sum=0;
+	// for(var p in parc){
+	// 	sum=sum+parcours[p].value; //addition des valeurs des groupes
+	// }
+	// var sumsum=(sum.toString(16))
+	// if (sumsum==="f"){
 		sumsum="F" //passage de la valeur en hexadecimal
-	}
+	// }
 		//ajout dans l'objet de l'ID et du summary
 		newCourse.id = "C"+year+sumsum+creadate+"@"+author;
 		newCourse.summary=summary
@@ -432,25 +427,11 @@ function createCalendarEvent(){
    	console.log(newEvent);
 
    	JSON.stringify(newEvent);
+
+   	writeCalendar(newCourse)
    }
 
-function modifyCalendar(){
-   	var nbtitles = document.getElementsByClassName("titlecalmod");
 
-   	for (var i = 0; i< nbtitles.length; i++)
-   	{
-   		if (nbtitles[i].checked)
-   		{
-		    	var content = myCalendar[i]["contents"].split('<!--more-->'); //à changer sur le json définitif
-		    	console.log(content)
-		    	document.getElementById("CalendarforModify").innerHTML='<h3>Title</h3>     <input type="text" name="title" id="title" value="'+nbtitles[i].id+'"/><br><br>';
-		    	document.getElementById("CalendarforModify").innerHTML+='<h3>Introduction</h3>     <input type="text" name="intro" id="intro" value="'+content[0]+'"/><br><br>';
-		    	document.getElementById("CalendarforModify").innerHTML+='<h3>Content</h3><textarea name="content" id="content" rows="10" cols="50" >'+content[1]+'</textarea>';
-		    	document.getElementById("CalendarforModify").innerHTML+='<input type="submit" onclick="modifyNewsfromJSON()" value="Modify" />';
-		    }
-		}
-		updateNewsDisplay();
-	}
 
 function deleteNews(){
   		var nbtitles = document.getElementsByClassName("titlecaldel");

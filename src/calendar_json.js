@@ -2,11 +2,23 @@
     {
         "ID"        : "C1F20150731T145900@userGithub", 
         "summary"   : "KM1BS10U-Stats", 
-        "date_start": "20150831T1400", 
-        "date_end"  : "20150831T1700", 
+        "date_start": "20160831T1400", 
+        "date_end"  : "20160831T1700", 
         "group"     : "All",
-        "lecturer"  : "M Beurton-Aimar",
+        "lecturer"  : "Beurton-Aimar M",
         "location"  : "room24@ED::Carreire",
+        "description" : "Read the article \"Beetroot Plantations in Himalaya\" before coming.",
+        "image"     : "biology",
+        "comment"   : "AEB-Stats"
+    },
+       {
+        "ID"        : "C1F20150731T145910@userGithub", 
+        "summary"   : "KM1BS10U-Stats", 
+        "date_start": "20160831T1400", 
+        "date_end"  : "20160831T1715", 
+        "group"     : "All",
+        "lecturer"  : "Beurton-Aimar M",
+        "location"  : "AmphiA5::Carreire",
         "description" : "Read the article \"Beetroot Plantations in Himalaya\" before coming.",
         "image"     : "biology",
         "comment"   : "AEB-Stats"
@@ -17,7 +29,7 @@
         "date_start": "20150804T0800", 
         "date_end"  : "20150804T1200", 
         "group"     : "A",
-        "lecturer"  : "JC Taveau",
+        "lecturer"  : "Taveau JC",
         "location"  : "room24@CREMI::Talence",
         "description"   : "",
         "image"     : "hybrid",
@@ -29,7 +41,7 @@
         "date_start": "20150804T0800", 
         "date_end"  : "20150804T1200", 
         "group"     : "B",
-        "lecturer"  : "P Thébault",
+        "lecturer"  : "Thébault P",
         "location"  : "room41@ED::Carreire",
         "description"   : ""
     },
@@ -45,7 +57,7 @@
         "description"   : ""
     },
     {
-        "ID"            : "E1F20150801T1459@jeesay",
+        "ID"            : "E0F20150801T1459@jeesay",
         "summary"       : "Summer holidays",
         "date_start"    : "20150701", 
         "date_end"      : "20150831", 

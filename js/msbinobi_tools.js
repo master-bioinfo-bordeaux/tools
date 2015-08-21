@@ -1021,7 +1021,7 @@ function getNewsJSON(){
 		
 	};
 	// xhr.open("GET", "http://master-bioinfo-bordeaux.github.io/data/news.json", true);
-	xhr.open("GET", "news_json.js", true);
+	xhr.open("GET", "src/news_json.js", true);
 	xhr.send(null);
 }
 
@@ -1119,12 +1119,11 @@ var listUE10 = [];
 var listidUE10= [];
 var locTalence = [];
 var locCarreire = [];
+var listlect = [];
 var listbat = [];
-
+var listbatmodify = [];
 var myCalendar;
 
-var util = require("util");
-var fs = require("fs");
 
 function initCalendar() {
 	//création des listes de cours
@@ -1164,14 +1163,10 @@ function initCalendar() {
 	}
 	//création de la liste des professeurs
 	var lectselect='';
-	var listlect=[];
 	for (var lec in lecturers){
-		for (var na=0;na<lecturers[lec].length;na++){
-			var namelec= lecturers[lec][na].name;
+			var namelec= lecturers[lec].name;
 			listlect.push(namelec)
-		}
 	}
-
 	listlect.sort();
 	for (var llec in listlect){
 		lectselect +='<option value="'+listlect[llec]+'">'+listlect[llec]+'</option>';
@@ -1256,21 +1251,17 @@ function initCalendar() {
 	//création de la liste des groupes
 	var groupselect='';
 	for (var g in groups){
-		for (var n=0;n<groups[g].length;n++){
-			var namegroup= groups[g][n].name;
-			groupselect +='<option value="'+namegroup+'">'+namegroup+'</option>';
-		}
+		var namegroup= groups[g].name;
+		groupselect +='<option value="'+namegroup+'">'+namegroup+'</option>';
 	}
 	document.getElementById("groups").innerHTML+=groupselect;
 
 	//création de la liste des parcours
 	var parselect='';
 	for (var g in parcours){
-		for (var n=0;n<parcours[g].length;n++){
-			var namepar= parcours[g][n].name;
-			var typepar= parcours[g][n].value;
-			parselect +=' <input type="checkbox" name="'+namepar+'" id="'+namepar+'" value="'+typepar+'" /> <label for="'+namepar+'">'+namepar+'</label>';
-		}
+		var namepar= parcours[g].name;
+		var typepar= parcours[g].value;
+		parselect +=' <input type="checkbox" name="'+namepar+'" id="'+namepar+'" value="'+typepar+'" checked /> <label for="'+namepar+'">'+namepar+'</label>';
 	}	
 	document.getElementById("parcours").innerHTML+=parselect;
 	getCalendarJSON();
@@ -1286,19 +1277,21 @@ function getCalendarJSON(){
     	}
 		
 	};
-	xhr.open("GET", "calendar_json.js", true);
+	xhr.open("GET", "src/calendar_json.js", true);
 	xhr.send(null);
 }
 
 function updateCalendarDisplay() {
-	console.log(myCalendar)
 	document.getElementById("listForModifycal").innerHTML='';
-	// document.getElementById("listForDeletioncal").innerHTML='';
+	document.getElementById("listForDeletioncal").innerHTML='';
+	var listmodify='';
+	var listdelete='';
 	  for(var n in myCalendar){
-  		document.getElementById("listForModifycal").innerHTML+='<input type="radio" name="titlecalmod" id="'+myCalendar[n]["summary"]+'" class="titlecalmod"/> <label for="'+myCalendar[n]["summary"]+'">'+myCalendar[n]["summary"]+'</label><br />'; 
-  		// document.getElementById("listForDeletion").innerHTML+='<input type="radio" name="titlenewsdel" id="'+myNews[n]["title"]+'" class="titlenewsdel"/> <label for="'+myNews[n]["title"]+'">'+myNews[n]["title"]+'</label><br />'; 
+  		listmodify+='<input type="radio" name="titlecalmod" id="'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'" class="titlecalmod"/> <label for="'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'">'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'</label><br />'; 
+  		listdelete+='<input type="radio" name="titlecalmod" id="'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'" class="titlecalmod"/> <label for="'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'">'+myCalendar[n]["summary"]+'-'+myCalendar[n]["date_start"]+'-'+myCalendar[n]["date_end"]+'</label><br />'; 
 	}
-
+	document.getElementById("listForModifycal").innerHTML=listmodify;
+	document.getElementById("listForDeletioncal").innerHTML=listdelete;
 }
 
 function selectUE(){
@@ -1385,15 +1378,14 @@ function createCalendarCourse(){
 		var parca = stusplit[i].split("[");	
 		parc.push(parca[0]); //récupération des noms de groupes seuls
 	}
-	var sum=0;
-	for(var p in parc){
-		console.log(p);
-		sum=sum+parcours["Parcours"][p].value; //addition des valeurs des groupes
-	}
-	var sumsum=(sum.toString(16))
-	if (sumsum==="f"){
+	// var sum=0;
+	// for(var p in parc){
+	// 	sum=sum+parcours[p].value; //addition des valeurs des groupes
+	// }
+	// var sumsum=(sum.toString(16))
+	// if (sumsum==="f"){
 		sumsum="F" //passage de la valeur en hexadecimal
-	}
+	// }
 		//ajout dans l'objet de l'ID et du summary
 		newCourse.id = "C"+year+sumsum+creadate+"@"+author;
 		newCourse.summary=summary
@@ -1444,7 +1436,7 @@ function createCalendarCourse(){
 
 	//passage de l'objet js en JSON
 	JSON.stringify(newCourse);
-	fs.appendFileSync("calendar_essai.json", newCourse, "UTF-8");
+
 }
 
 function createCalendarEvent(){
@@ -1546,25 +1538,11 @@ function createCalendarEvent(){
    	console.log(newEvent);
 
    	JSON.stringify(newEvent);
+
+   	writeCalendar(newCourse)
    }
 
-function modifyCalendar(){
-   	var nbtitles = document.getElementsByClassName("titlecalmod");
 
-   	for (var i = 0; i< nbtitles.length; i++)
-   	{
-   		if (nbtitles[i].checked)
-   		{
-		    	var content = myCalendar[i]["contents"].split('<!--more-->'); //à changer sur le json définitif
-		    	console.log(content)
-		    	document.getElementById("CalendarforModify").innerHTML='<h3>Title</h3>     <input type="text" name="title" id="title" value="'+nbtitles[i].id+'"/><br><br>';
-		    	document.getElementById("CalendarforModify").innerHTML+='<h3>Introduction</h3>     <input type="text" name="intro" id="intro" value="'+content[0]+'"/><br><br>';
-		    	document.getElementById("CalendarforModify").innerHTML+='<h3>Content</h3><textarea name="content" id="content" rows="10" cols="50" >'+content[1]+'</textarea>';
-		    	document.getElementById("CalendarforModify").innerHTML+='<input type="submit" onclick="modifyNewsfromJSON()" value="Modify" />';
-		    }
-		}
-		updateNewsDisplay();
-	}
 
 function deleteNews(){
   		var nbtitles = document.getElementsByClassName("titlecaldel");
@@ -1577,136 +1555,420 @@ function deleteNews(){
 		}
 		getCalendarJSON();
 }
-;var locations = {
-    'CREMI::Talence':{
+;function modifyCalendar(){
+   	var nbtitles = document.getElementsByClassName("titlecalmod");
+   	for (var i = 0; i<= nbtitles.length; i++)
+   	{
+   		if (nbtitles[i].checked)
+   		{
+   			var yearstart=myCalendar[i].date_start.substring(0,4);
+   			var monthstart=myCalendar[i].date_start.substring(4,6);
+   			var daystart=myCalendar[i].date_start.substring(6,8);
+   			var hourstart="00";
+   			var minstart="00";
+   			if (myCalendar[i].date_start.charAt(8)==="T"){
+   				daystart=myCalendar[i].date_start.substring(6,8);
+   				hourstart=myCalendar[i].date_start.substring(9,11);	
+   				minstart=myCalendar[i].date_start.substring(11);
+   			}
+   			var yearend=myCalendar[i].date_end.substring(0,4);
+   			var monthend=myCalendar[i].date_end.substring(4,6);
+   			var dayend=myCalendar[i].date_end.substring(6,8);
+   			var hourend="00";
+   			var minend="00";
+   			if (myCalendar[i].date_end.charAt(8)==="T"){
+   				dayend=myCalendar[i].date_end.substring(6,8);
+   				hourend=myCalendar[i].date_end.substring(9,11);	
+   				minend=myCalendar[i].date_end.substring(11)
+   			}
+   			var loc=myCalendar[i].location.split('@');
+   			var lect=myCalendar[i]["lecturer"];
+   			var group=myCalendar[i]["group"];
+   			var contentmodify=myCalendar[i]["description"]
+
+   			var titleparse=myCalendar[i].ID.split('');
+   			if(titleparse[0]==="C"){
+   				var optionsmodify='';
+		    	optionsmodify='<h3>Summary</h3>     <input type="text" name="title" id="title" value="'+myCalendar[i]["summary"]+'"/><br><br>';
+		    	optionsmodify+='<h3>Lecturer</h3>     <select name="lecturermodify" id="lecturermodify"></select><br><br>';
+		    	optionsmodify+='<h3>Start</h3><select name="start" id="startYearModify"></select><select name="start" id="startMonthModify"></select><select name="start" id="startDayModify"></select>-<select name="start" id="startHourModify"></select>h<select name="start" id="startMinModify"></select><br>'
+		    	optionsmodify+='<h3>End</h3><select name="end" id="endYearModify"></select><select name="end" id="endMonthModify"></select><select name="end" id="endDayModify"></select>-<select name="end" id="endHourModify"></select>h<select name="end" id="endMinModify"></select><br>'
+		    	optionsmodify+='<div id="locations"><h3>Location</h3><select name="locationmodify" id="locationmodify" onChange="selectRoomModify()"></select><span id="roomsmodify"></span></div>';
+		    	optionsmodify+='<span id="students"><h3>Students</h3><select name="groupsmodify" id="groupsmodify"></select></span><br><br><br>'
+		    	optionsmodify+='<h3>Notes</h3><textarea name="notes" id="contentmodify" rows="10" cols="50" required>'+contentmodify+'</textarea>'
+		    	optionsmodify+='<input type="submit" onclick="modifyNewsfromJSON()" value="Modify" />';
+		    }
+   			if(titleparse[0]==="E"){
+   				var optionsmodify='';
+		    	optionsmodify='<h3>Summary</h3>     <input type="text" name="title" id="title" value="'+myCalendar[i]["summary"]+'"/><br><br>';
+		    	optionsmodify+='<h3>Lecturer</h3><input type="text" name="lecturer" id="lecturerevent" required/><br><br>';
+		    	optionsmodify+='<h3>Start</h3><select name="start" id="startYearModify"></select><select name="start" id="startMonthModify"></select><select name="start" id="startDayModify"></select>-<select name="start" id="startHourModify"></select>h<select name="start" id="startMinModify"></select><br>'
+		    	optionsmodify+='<h3>End</h3><select name="end" id="endYearModify"></select><select name="end" id="endMonthModify"></select><select name="end" id="endDayModify"></select>-<select name="end" id="endHourModify"></select>h<select name="end" id="endMinModify"></select><br>'
+		    	optionsmodify+='<div id="locations"><h3>Location</h3><select name="locationmodify" id="locationmodify" onChange="selectRoomModify()"></select><span id="roomsmodify"></span></div>';
+		    	optionsmodify+='<span id="students"><h3>Students</h3><select name="yearstudymodify" id="yearstudymodify"></select><span id="parcoursmodify"></span><br><br>'
+		    	optionsmodify+='<h3>Notes</h3><textarea name="notes" id="contentmodify" rows="10" cols="50" required>'+contentmodify+'</textarea>'
+		    	optionsmodify+='<input type="submit" onclick="modifyNewsfromJSON()" value="Modify" />';
+		    }
+		    document.getElementById("CalendarforModify").innerHTML=optionsmodify
+		    // updateDateModify(yearstart,monthstart,daystart,hourstart,minstart,yearend,monthend,dayend,hourend,minend);
+		    // updateLocationModify(loc);
+		    initmodifyCalendar(lect,yearstart,monthstart,daystart,hourstart,minstart,yearend,monthend,dayend,hourend,minend,loc,group,titleparse);
+		}
+	}
+	// updateNewsDisplay();
+}
+
+function initmodifyCalendar(lect,yearstart,monthstart,daystart,hourstart,minstart,yearend,monthend,dayend,hourend,minend,loc,group,titleparse) {
+	//remplissage des listes de dates
+	var yearselectstart;
+	var monthselectstart;
+	var dayselectstart;
+	var hourselectstart;
+	var minselectstart;
+	var yearselectend;
+	var monthselectend;
+	var dayselectend;
+	var hourselectend;
+	var minselectend;
+
+	var year=["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"]
+	for (var y=0;y<year.length;y++){
+		if (year[y]===yearstart){
+			yearselectstart+='<option value="'+year[y]+'" selected>'+year[y]+'</option>';
+		}
+		else {
+			yearselectstart+='<option value="'+year[y]+'">'+year[y]+'</option>';
+		}
+		if (year[y]===yearend){
+			yearselectend+='<option value="'+year[y]+'" selected>'+year[y]+'</option>';
+		}
+		else{
+			yearselectend+='<option value="'+year[y]+'">'+year[y]+'</option>';
+		}
+	}
+
+	var month=["01","02","03","04","05","06","07","08","09","10","11","12"];
+	for (var mo=0;mo<month.length;mo++){
+		if (month[mo]===monthstart){
+			monthselectstart+='<option value="'+month[mo]+'" selected>'+month[mo]+'</option>';
+		}
+		else{
+			monthselectstart+='<option value="'+month[mo]+'">'+month[mo]+'</option>';
+		}
+		if (month[mo]===monthend){
+			monthselectend+='<option value="'+month[mo]+'" selected>'+month[mo]+'</option>';
+		}
+		else{
+			monthselectend+='<option value="'+month[mo]+'">'+month[mo]+'</option>';
+		}
+	}
+
+	var day=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"]
+	for (var d=0;d<day.length;d++){
+		if (day[d]===daystart){
+			dayselectstart+='<option value="'+day[d]+'" selected>'+day[d]+'</option>';
+		}
+		else {
+			dayselectstart+='<option value="'+day[d]+'">'+day[d]+'</option>';
+		}
+		if (day[d]===dayend){
+			dayselectend+='<option value="'+day[d]+'" selected>'+day[d]+'</option>';
+			}
+		else {
+			dayselectend+='<option value="'+day[d]+'">'+day[d]+'</option>';
+		}
+	}
+
+	var hour=["00","08","09","10","11","12","13","14","15","16","17","18","19"]
+	for (var h=0;h<hour.length;h++){
+		if (hour[h]===hourstart){
+			hourselectstart+='<option value="'+hour[h]+'" selected>'+hour[h]+'</option>';
+		}
+		else{
+			hourselectstart+='<option value="'+hour[h]+'">'+hour[h]+'</option>'
+		}
+		if (hour[h]===hourend){
+			hourselectend+='<option value="'+hour[h]+'" selected>'+hour[h]+'</option>';
+		}
+		else{
+			hourselectend+='<option value="'+hour[h]+'">'+hour[h]+'</option>';
+		}
+	}
+	var minute=["00","15","30","45"]
+	for (var min=0;min<minute.length;min++){
+		if (minute[min]===minstart){
+			minselectstart+='<option value="'+minute[min]+'" selected>'+minute[min]+'</option>';
+		}
+		else{
+			minselectstart+='<option value="'+minute[min]+'">'+minute[min]+'</option>';
+		}
+		if (minute[min]===minend){
+			minselectend+='<option value="'+minute[min]+'" selected>'+minute[min]+'</option>';
+		}
+		else{
+			minselectend+='<option value="'+minute[min]+'">'+minute[min]+'</option>';
+		}
+	}
+	document.getElementById("startYearModify").innerHTML+=yearselectstart;
+	document.getElementById("startMonthModify").innerHTML+=monthselectstart;
+	document.getElementById("startDayModify").innerHTML+=dayselectstart;
+	document.getElementById("startHourModify").innerHTML+=hourselectstart;
+	document.getElementById("startMinModify").innerHTML+=minselectstart;
+	document.getElementById("endYearModify").innerHTML+=yearselectend;
+	document.getElementById("endMonthModify").innerHTML+=monthselectend;
+	document.getElementById("endDayModify").innerHTML+=dayselectend;
+	document.getElementById("endHourModify").innerHTML+=hourselectend;
+	document.getElementById("endMinModify").innerHTML+=minselectend;
+
+	//création de la liste des lieux
+	var locselectmodify='';
+	if (loc[0]===""){
+		loc.splice(0,1,"Autre-Aucun");
+	}
+	for (var l in locations){
+		var nameloc= locations[l].name;
+		if (nameloc===loc[1] || nameloc===loc[0]){
+			locselectmodify +='<option value="'+nameloc+'" selected>'+nameloc+'</option>';
+		}
+		else{
+		locselectmodify +='<option value="'+nameloc+'">'+nameloc+'</option>';
+		}
+		if(locations[l].type !=="bat"){
+			listbatmodify.push(nameloc);
+		}
+	}
+	document.getElementById("locationmodify").innerHTML+=locselectmodify;
+	for (var l=0;l<listbatmodify.length;l++){
+		if (loc[1]===listbatmodify[l] || loc[0]===listbatmodify[l]){
+			var html=' ';
+		}
+	}
+	if (html!==' '){
+			var html='<h3>Room</h3>     <input type="text" name="room" id="room" value="'+loc[0].substring(4)+'" required/>';
+		}
+		
+	document.getElementById("roomsmodify").innerHTML=html;
+
+	if (titleparse[0]==="E"){
+
+	//création de la liste des années
+	var yearselectmodify='';
+	if (titleparse[1]==="0"){
+		yearselectmodify+='<option value="All" selected>All</option>'
+	}
+	else{
+		yearselectmodify+='<option value="All">All</option>'
+	}
+	if (titleparse[1]==="1"){
+		yearselectmodify+='<option value="M1" selected>M1</option>'
+	}
+	else{
+		yearselectmodify+='<option value="M1">M1</option>'
+	}
+	if (titleparse[1]==="2"){
+		yearselectmodify+='<option value="M2" selected>M2</option>'
+	}
+	else{
+		yearselectmodify+='<option value="M2">M2</option>'
+	}
+	document.getElementById("yearstudymodify").innerHTML+=yearselectmodify;
+
+	//création de la liste des parcours
+	var parselectmodify='';
+	for (var g in parcours){
+		var namepar= parcours[g].name;
+		var typepar= parcours[g].value;
+		parselectmodify +=' <input type="checkbox" name="'+namepar+'" id="'+namepar+'" value="'+typepar+'" checked /> <label for="'+namepar+'">'+namepar+'</label>';
+		}
+	document.getElementById("parcoursmodify").innerHTML+=parselectmodify;
+	}
+
+	if (titleparse[0]==="C"){
+		//remplissage des lecturers
+		var lectselect='';
+		for (var llec in listlect){
+			if (listlect[llec]===lect){
+				lectselect +='<option value="'+listlect[llec]+'" selected>'+listlect[llec]+'</option>';
+			}
+			else{
+			lectselect +='<option value="'+listlect[llec]+'">'+listlect[llec]+'</option>';
+			}
+		}
+		document.getElementById("lecturermodify").innerHTML+=lectselect;
+
+		//création de la liste des groupes
+		var groupselectmodify='';
+		
+		for (var g in groups){
+			var namegroup= groups[g].name;
+			if (namegroup===group){
+				groupselectmodify +='<option value="'+namegroup+'" selected>'+namegroup+'</option>';
+			}
+			else{
+				groupselectmodify +='<option value="'+namegroup+'">'+namegroup+'</option>';
+			}
+		}
+		document.getElementById("groupsmodify").innerHTML+=groupselectmodify;
+	}
+}
+
+
+
+function selectRoomModify(){
+	var locmodify=document.getElementById('locationmodify').value;
+	for (var l=0;l<listbatmodify.length;l++){
+		if (locmodify===listbatmodify[l]){
+			var html=' ';
+		}
+	}
+	if (html!==' '){
+			var html='<h3>Room</h3>     <input type="text" name="room" id="room" required/>';
+		}
+
+	document.getElementById("roomsmodify").innerHTML=html;
+};var locations = {
+    'CREMI::Talence' : {
         'name': "CREMI::Talence",
         'loc' : "Talence",
         'type': "bat"
     },
 
-    'A21::Talence':{
+    'A21::Talence' : {
         'name': "A21::Talence",
         'loc' : "Talence",
         'type': "bat"
     },
 
-    'A29::Talence':{
+    'A29::Talence' : {
         'name': "A29::Talence",
         'loc' : "Talence",
         'type': "bat"
     },
 
-    'A30::Talence':{
+    'A30::Talence' : {
         'name': "A30::Talence",
         'loc' : "Talence",
         'type': "bat"
     },
 
-    'B4::Talence':{
+    'B4::Talence' : {
         'name': "B4::Talence",
         'loc' : "Talence",
         'type': "bat"
     },
 
-    'B5::Talence' :{
+    'B5::Talence' : {
         'name': "B5::Talence",
         'loc' : "Talence",
         'type': "bat",
     },
 
-    'B7::Talence':{
+    'B7::Talence' : {
         'name': "B7::Talence",
         'loc' : "Talence",
         'type': "bat"
     },
 
-    'AmphiA5::Carreire':{
+    'AmphiA5::Carreire' : {
         'name': "AmphiA5::Carreire",
         'loc' : "Carreire",
         'type': "amphi"
     },
 
-    'ED:Carreire':{
+    'ED::Carreire' : {
         'name': "ED::Carreire",
         'loc' : "Carreire",
         'type': "bat"
     },
-    'Autre-Aucun':{
+    'Autre-Aucun' : {
         'name': "Autre-Aucun",
         'loc' : "Autre",
-        'type' : "amphi"
+        'type': "amphi"
     }
 }
 
 var lecturers = {
-    'Lecturers ' : [
-    {
+    'Beurton-Aimar M' : {
         'name':"Beurton-Aimar M"
     },
-    {
+    'Taveau JC' : {
         'name':"Taveau JC"
     },
-    {
+    'Thébault P' : {
         'name':"Thébault P"
     },
-    {
+    'Delmas O' : {
         'name':"Delmas O"
     },
-    {
+    'Desbarat P' : {
         'name':"Desbarat P"
     },
-    {
+    'Hernould M' : {
         'name':"Hernould M"
     },
-    {
+    'Boussicault A' : {
         'name':"Boussicault A"
     },
-    {
+    'Nogues X' : {
         'name':"Nogues X"
     },
-    {
+    'Other' : {
         'name':"Other"
-    }]
+    }
 }
 
+
 var groups = {
-    'Groups' : [{
+    'All' : {
         'name':"All"
     },
-    {
+    'A' : {
         'name':"A"
     },
-    {
+    'B' : {
         'name':"B"
-    }]
+    }
 }
 
 var parcours = {
-    'Parcours' : [{
+    'C++BIO' : {
         'name':"C++BIO",
         'value':1
     },
-    {
+    'GENORG' : {
         'name':"GENORG",
         'value':2
     },
-    {
+    'ORGECO' : {
         'name':"ORGECO",
         'value':4
     },
-    {
+    'BSC' : {
         'name':"BSC",
         'value':8
-    }]
-};[
+    }
+}
+;[
     {
         "ID"        : "C1F20150731T145900@userGithub", 
         "summary"   : "KM1BS10U-Stats", 
-        "date_start": "20150831T1400", 
-        "date_end"  : "20150831T1700", 
+        "date_start": "20160831T1400", 
+        "date_end"  : "20160831T1700", 
         "group"     : "All",
-        "lecturer"  : "M Beurton-Aimar",
+        "lecturer"  : "Beurton-Aimar M",
         "location"  : "room24@ED::Carreire",
+        "description" : "Read the article \"Beetroot Plantations in Himalaya\" before coming.",
+        "image"     : "biology",
+        "comment"   : "AEB-Stats"
+    },
+       {
+        "ID"        : "C1F20150731T145910@userGithub", 
+        "summary"   : "KM1BS10U-Stats", 
+        "date_start": "20160831T1400", 
+        "date_end"  : "20160831T1715", 
+        "group"     : "All",
+        "lecturer"  : "Beurton-Aimar M",
+        "location"  : "AmphiA5::Carreire",
         "description" : "Read the article \"Beetroot Plantations in Himalaya\" before coming.",
         "image"     : "biology",
         "comment"   : "AEB-Stats"
@@ -1717,7 +1979,7 @@ var parcours = {
         "date_start": "20150804T0800", 
         "date_end"  : "20150804T1200", 
         "group"     : "A",
-        "lecturer"  : "JC Taveau",
+        "lecturer"  : "Taveau JC",
         "location"  : "room24@CREMI::Talence",
         "description"   : "",
         "image"     : "hybrid",
@@ -1729,7 +1991,7 @@ var parcours = {
         "date_start": "20150804T0800", 
         "date_end"  : "20150804T1200", 
         "group"     : "B",
-        "lecturer"  : "P Thébault",
+        "lecturer"  : "Thébault P",
         "location"  : "room41@ED::Carreire",
         "description"   : ""
     },
@@ -1745,7 +2007,7 @@ var parcours = {
         "description"   : ""
     },
     {
-        "ID"            : "E1F20150801T1459@jeesay",
+        "ID"            : "E0F20150801T1459@jeesay",
         "summary"       : "Summer holidays",
         "date_start"    : "20150701", 
         "date_end"      : "20150831", 
