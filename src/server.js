@@ -2,7 +2,7 @@ var http = require('http');
 var fs = require('fs');
 var GitHubApi = require("github");
 
-var github = github.authenticate({
+var github = GitHubApi.authenticate({
     type: "basic",
     username: "mikedeboertest",
     password: "test1324"

@@ -1,5 +1,6 @@
 var http = require('http');
 var fs = require('fs');
+var github = require('octonode');
 
 // Chargement du fichier index.html affiché au client
 var server = http.createServer(function(req, res) {
@@ -9,6 +10,11 @@ var server = http.createServer(function(req, res) {
     });
 });
 
+var client = github.client();
+
+client.get('/users/pksunkara', {}, function (err, status, body, headers) {
+  console.log(body); //json object
+});
 // Chargement de socket.io
 var io = require('socket.io').listen(server);
 
@@ -18,7 +24,7 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-fs.writeFileSync("essai_calendar.json", newCourse, "UTF-8");
+fs.writeFileSync("essai_calendar.json", "Hello world", "UTF-8");
 
 server.listen(8080);
 
